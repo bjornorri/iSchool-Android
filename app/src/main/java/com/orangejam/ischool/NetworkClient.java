@@ -55,6 +55,7 @@ public class NetworkClient {
                     // Send the request and get the response.
                     HttpResponse response = httpClient.execute(getRequest);
                     int statusCode = response.getStatusLine().getStatusCode();
+                    Log.d("NetworkClient", "Status Code: " + statusCode);
                     // If the status code is 200 the request was successful.
                     if(statusCode == 200) {
                         String html = EntityUtils.toString(response.getEntity());
