@@ -1,5 +1,6 @@
 package com.orangejam.ischool;
 
+import com.orangejam.ischool.model.Class;
 import com.orangejam.ischool.model.Assignment;
 import com.orangejam.ischool.model.Grade;
 
