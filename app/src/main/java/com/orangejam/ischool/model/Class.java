@@ -6,7 +6,7 @@ import java.util.GregorianCalendar;
 /**
  * Created by bjornorri on 07/10/14.
  */
-public class Class {
+public class Class implements Comparable<Class> {
 
     public static final String Lecture = "Fyrirlestur";
     public static final String Discussion = "Dæmatími";
@@ -83,5 +83,10 @@ public class Class {
             hash += (int)location.charAt(i);
         }
         return hash;
+    }
+
+    @Override
+    public int compareTo(Class another) {
+        return this.startDate.compareTo(another.startDate);
     }
 }
