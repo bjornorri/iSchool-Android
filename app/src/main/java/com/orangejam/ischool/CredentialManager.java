@@ -18,7 +18,7 @@ public class CredentialManager {
         return sharedPreferences.getString("password", null);
     }
 
-    public static void setCredentials(Context context, String username, String password) {
+    public static void storeCredentials(Context context, String username, String password) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("com.orangejam.ischool", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("username", username);
