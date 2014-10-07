@@ -23,7 +23,7 @@ public class CredentialManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("username", username);
         editor.putString("password", password);
-        editor.commit();
+        editor.apply();
     }
 
     public static void clearCredentials(Context context) {
@@ -31,6 +31,6 @@ public class CredentialManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove("username");
         editor.remove("password");
-        editor.commit();
+        editor.apply();
     }
 }
