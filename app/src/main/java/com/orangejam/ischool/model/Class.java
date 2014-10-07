@@ -20,6 +20,14 @@ public class Class {
     public Calendar startDate;
     public Calendar endDate;
 
+    public Class(String courseName, String type, String location, Calendar startDate, Calendar endDate) {
+        this.courseName = courseName;
+        this.type = type;
+        this.location = location;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
     public boolean isOver()
     {
         Calendar now = new GregorianCalendar();
