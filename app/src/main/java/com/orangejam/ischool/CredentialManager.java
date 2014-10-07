@@ -31,5 +31,6 @@ public class CredentialManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove("username");
         editor.remove("password");
+        editor.commit();
     }
 }
