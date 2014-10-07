@@ -30,7 +30,7 @@ public class NetworkClient {
 
     /* Fetches a HTML page from a given URL asynchronously.
      * The caller must provide a success handler and an error handler that get called on success and error. */
-    public static void fetchPage(final String pageURL, final Handler successHandler, final Handler errorHandler, final Context context) {
+    public static void fetchPage(final Context context, final String pageURL, final Handler successHandler, final Handler errorHandler) {
 
         new Thread(new Runnable() {
             @Override
@@ -66,7 +66,6 @@ public class NetworkClient {
                     else {
                         errorHandler.sendEmptyMessage(statusCode);
                     }
-                    Log.d("NetworkClient", "This is what we get back:" + response.getStatusLine().toString() + ", " + response.getEntity().toString());
                 } catch(ClientProtocolException e) {
                     errorHandler.sendEmptyMessage(-1);
                     Log.d("NetworkClient", "Client protocol exception", e);
