@@ -258,8 +258,8 @@ public class ParserTests extends ApplicationTestCase<Application> {
             assertEquals("The grade at index 12 should be for the assignment hw1", "hw1", grade.assignmentName);
             assertEquals("The grade at index 12 should have the course name Tölvusamskipti", "Tölvusamskipti", grade.courseName);
             assertEquals("The grade at index 12 should have the value 10", 10, grade.grade);
-            assertEquals("The rank for the grade at index 12 should start at 1", 1, grade.firstRank);
-            assertEquals("The rank for the grade at index 12 should end at 3", 3, grade.lastRank);
+            assertEquals("The rank for the grade at index 12 should start at 1", new Integer(1), grade.firstRank);
+            assertEquals("The rank for the grade at index 12 should end at 3", new Integer(3), grade.lastRank);
             assertEquals("The feedback for the grade at index 12 should be the empty string", "", grade.feedback);
             assertEquals("The grade at index 12 should have the correct URL", "?Page=Exe&ID=2.4&ViewMode=2&fagid=26711&verkID=48726", grade.URL);
         } else {
@@ -273,7 +273,7 @@ public class ParserTests extends ApplicationTestCase<Application> {
         ArrayList<Grade> grades = Parser.parseGrades(html);
 
         // Test if all grades were parsed.
-        assertEquals("There should be 94 grades", 94, grades.size());
+        assertEquals("There should be 84 grades", 84, grades.size());
 
         // Test grade at index 70.
         if(grades.size() > 70) {
@@ -281,8 +281,8 @@ public class ParserTests extends ApplicationTestCase<Application> {
             assertEquals("The grade at index 70 should be for the assignment Final Exam", "Final Exam", grade.assignmentName);
             assertEquals("The grade at index 70 should have the course name Tölvuöryggi", "Tölvuöryggi", grade.courseName);
             assertEquals("The grade at index 70 should have the value 10.7", 10.7, grade.grade);
-            assertEquals("The rank for the grade at index 70 should start at 5", 5, grade.firstRank);
-            assertEquals("The rank for the grade at index 70 should end at 5", 5, grade.lastRank);
+            assertEquals("The rank for the grade at index 70 should start at 5", new Integer(5), grade.firstRank);
+            assertEquals("The rank for the grade at index 70 should end at 5", new Integer(5), grade.lastRank);
             assertEquals("The feedback for the grade at index 70 should be Vel gert!", "Vel gert!", grade.feedback);
             assertEquals("The grade at index 70 should have the correct URL", "?Page=Exe&ID=2.4&ViewMode=2&fagid=25923&verkID=47391", grade.URL);
         } else {
