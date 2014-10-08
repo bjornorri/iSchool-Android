@@ -213,9 +213,6 @@ public class Parser {
             Assignment assignment = new Assignment(name, courseName, dueDate, handedIn, URL);
             assignments.add(assignment);
         }
-        for(Assignment a : assignments) {
-            Log.d("", "Assignment: " + a.name);
-        }
         return assignments;
     }
 
