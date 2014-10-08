@@ -17,7 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 
 /**
  * Created by bjornorri on 07/10/14.
@@ -222,6 +221,109 @@ public class Parser {
 
     public static ArrayList<Grade> parseGrades(String html) {
         ArrayList<Grade> grades = new ArrayList<Grade>();
+
+        // Create a Jsoup Document object.
+        Document page = Jsoup.parse(html);
+        String query = "div.ruContentPage > center > table";
+        Elements tables = page.select(query);
+        // Quit ef there is no table.
+        if(tables.size() == 0) {
+            return grades;
+        }
+        query = "tbody > tr";
+        Elements nodes = tables.last().select(query);
+        // If there are less than 2 rows in the table it can't be the correct table.
+        if(nodes.size() < 2) {
+            return grades;
+        }
+        Element firstEntry = nodes.get(1);
+        // If the entries in the table don't contain 4 columns, this can't be the correct table.
+        if(firstEntry.children().size() != 4) {
+            return grades;
+        }
+        // Ignore the empty row at the end.
+        nodes.remove(nodes.size() - 1);
+
+        String currentCourse = "";
+        // Loop through all rows in the table.
+        for(Element row : nodes) {
+            String assignmentName = "";
+            Float gradeValue = null;
+            Integer firstRank = null;
+            Integer lastRank = null;
+            String feedback = "";
+            String URL = "";
+            Elements columns = row.children();
+            boolean isHeader = false;
+            for(int i = 0; i < columns.size(); i++) {
+                isHeader = false;
+                Element column = columns.get(i);
+                if(column.tagName().equals("th")) {
+                    String text = column.text();
+                    String[] tokens = text.split(" ", 2);
+                    currentCourse = tokens[1];
+                    isHeader = true;
+                } else {
+                    String text;
+                    switch(i) {
+                        case 0:
+                            // Name column.
+                            Elements links = column.getElementsByTag("a");
+                            if(links.size() > 0) {
+                                Element link = links.first();
+                                text = link.text();
+                                assignmentName = text;
+                                URL = link.attr("href");
+                            }
+                            break;
+                        case 1:
+                            // Grade column.
+                            text = column.text();
+                            if(!text.equals("\u00a0")) {
+                                String[] gradeTokens = text.split(": ");
+                                String gradeString = gradeTokens[gradeTokens.length - 1].replace(",", ".");
+                                gradeValue = Float.parseFloat(gradeString);
+                            }
+                            break;
+                        case 2:
+                            // Rank column.
+                            text = column.text();
+                            if(!text.equals("\u00a0")) {
+                                String[] rankTokens = text.split(": ");
+                                String rankString = rankTokens[rankTokens.length - 1];
+                                String[] rankBounds = rankString.split(" - ");
+                                if (rankBounds.length == 1) {
+                                    int rank = Integer.parseInt(rankBounds[0]);
+                                    firstRank = rank;
+                                    lastRank = rank;
+                                } else if (rankBounds.length == 2) {
+                                    firstRank = Integer.parseInt(rankBounds[0]);
+                                    lastRank = Integer.parseInt(rankBounds[1]);
+                                }
+                            }
+                            break;
+                        case 3:
+                            text = column.text();
+                            if(!text.equals("\u00a0")) {
+                                // Feedback column.
+                                if (column.textNodes().size() > 0) {
+                                    feedback = column.textNodes().get(0).getWholeText();
+                                } else {
+                                    feedback = text;
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            // Create the grade and add it to the array list.
+            if(!isHeader) {
+                Grade grade = new Grade(assignmentName, currentCourse, gradeValue, firstRank, lastRank, feedback, URL);
+                grades.add(grade);
+            }
+        }
         return grades;
     }
 }
