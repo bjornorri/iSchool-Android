@@ -276,17 +276,17 @@ public class ParserTests extends ApplicationTestCase<Application> {
         assertEquals("There should be 84 grades", 84, grades.size());
 
         // Test grade at index 70.
-        if(grades.size() > 70) {
-            Grade grade = grades.get(70);
-            assertEquals("The grade at index 70 should be for the assignment Final Exam", "Final Exam", grade.assignmentName);
-            assertEquals("The grade at index 70 should have the course name Tölvuöryggi", "Tölvuöryggi", grade.courseName);
-            assertEquals("The grade at index 70 should have the value 10.7", 10.7, grade.grade);
-            assertEquals("The rank for the grade at index 70 should start at 5", new Integer(5), grade.firstRank);
-            assertEquals("The rank for the grade at index 70 should end at 5", new Integer(5), grade.lastRank);
-            assertEquals("The feedback for the grade at index 70 should be Vel gert!", "Vel gert!", grade.feedback);
-            assertEquals("The grade at index 70 should have the correct URL", "?Page=Exe&ID=2.4&ViewMode=2&fagid=25923&verkID=47391", grade.URL);
+        if(grades.size() > 60) {
+            Grade grade = grades.get(60);
+            assertEquals("The grade at index 60 should be for the assignment Final Exam", "Final Exam", grade.assignmentName);
+            assertEquals("The grade at index 60 should have the course name Tölvuöryggi", "Tölvuöryggi", grade.courseName);
+            assertEquals("The grade at index 60 should have the value 10.7", 10.7, grade.grade);
+            assertEquals("The rank for the grade at index 60 should start at 5", new Integer(5), grade.firstRank);
+            assertEquals("The rank for the grade at index 60 should end at 5", new Integer(5), grade.lastRank);
+            assertEquals("The feedback for the grade at index 60 should be Vel gert!", "Vel gert!", grade.feedback);
+            assertEquals("The grade at index 60 should have the correct URL", "?Page=Exe&ID=2.4&ViewMode=2&fagid=25923&verkID=47391", grade.URL);
         } else {
-            fail("Could not test grade at index 70");
+            fail("Could not test grade at index 60");
         }
     }
 
