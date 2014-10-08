@@ -278,7 +278,7 @@ public class ParserTests extends ApplicationTestCase<Application> {
         // Test grade at index 70.
         if(grades.size() > 60) {
             Grade grade = grades.get(60);
-            assertEquals("The grade at index 60 should be for the assignment Final Exam", "Final Exam", grade.assignmentName);
+            assertEquals("The grade at index 60 should be for the assignment Final exam", "Final exam", grade.assignmentName);
             assertEquals("The grade at index 60 should have the course name Tölvuöryggi", "Tölvuöryggi", grade.courseName);
             assertEquals("The grade at index 60 should have the value 10.7", 10.7, grade.grade);
             assertEquals("The rank for the grade at index 60 should start at 5", new Integer(5), grade.firstRank);
