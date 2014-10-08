@@ -100,7 +100,6 @@ public class Parser {
                             if(info.length > 2) {
                                 typeString = info[2];
                             }
-                            Log.d("", "Type: " + typeString);
                             String type;
                             // Could get more information here.
 
@@ -146,6 +145,78 @@ public class Parser {
 
     public static ArrayList<Assignment> parseAssignments(String html) {
         ArrayList<Assignment> assignments = new ArrayList<Assignment>();
+        // Create a Jsoup Document object.
+        Document page = Jsoup.parse(html);
+        String query = "div.ruContentPage > center > table";
+        Elements tables = page.select(query);
+        // Quit ef there is no table.
+        if(tables.size() == 0) {
+            return assignments;
+        }
+        query = "tbody > tr";
+        Elements nodes = tables.first().select(query);
+        Element tableHeader = nodes.first();
+        // If this is not the header, or the table does not contain 5 columns, quit.
+        if(!tableHeader.className().equals("ruTableTitle") || tableHeader.children().size() != 5) {
+            return assignments;
+        }
+        // Ignore the table header and the empty row at the end.
+        nodes.remove(nodes.size() - 1);
+        nodes.remove(0);
+
+        // Create a date formatter to easily create Calendar objects.
+        DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+
+        // Loop through the rows of the table.
+        for(Element row : nodes) {
+            // Create an assignment for each row.
+            String name = "";
+            String courseName = "";
+            Calendar dueDate = Calendar.getInstance();
+            boolean handedIn = false;
+            String URL = "";
+            for(int i = 0; i < row.children().size(); i++) {
+                Element column = row.children().get(i);
+                // Fill in the data based on the column index.
+                String text;
+                switch(i) {
+                    case 0:
+                        try {
+                            text = column.text();
+                            dueDate.setTime(formatter.parse(text));
+                        } catch(ParseException e) {
+                            Log.d("Parser", "Parse Exception", e);
+                        }
+                        break;
+                    case 1:
+                        text = column.text();
+                        handedIn = !(text.equals("Óskilað"));
+                        break;
+                    case 3:
+                        text = column.text();
+                        courseName = text;
+                        break;
+                    case 4:
+                        Elements links = column.getElementsByTag("a");
+                        if(links.size() > 0) {
+                            Element link = links.first();
+                            URL = link.attr("href");
+                            text = link.text();
+                            name = text;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            // Create the assignment object and add it to the array list.
+            Assignment assignment = new Assignment(name, courseName, dueDate, handedIn, URL);
+            assignments.add(assignment);
+        }
+        for(Assignment a : assignments) {
+            Log.d("", "Assignment: " + a.name);
+        }
         return assignments;
     }
 
