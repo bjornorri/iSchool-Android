@@ -10,10 +10,12 @@ import com.orangejam.ischool.model.Assignment;
 import com.orangejam.ischool.model.Grade;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by bjornorri on 08/10/14.
  */
+
 public class DataStore {
 
     private static DataStore mInstance;
@@ -67,6 +69,24 @@ public class DataStore {
 
     public ArrayList<Grade> getGrades() {
         return mGrades;
+    }
+
+    /* Convenience methods to get classes by day. */
+    public ArrayList<Class> getClassesForDay(int weekDay) {
+        ArrayList<Class> classes = new ArrayList<Class>();
+        if(mClasses != null) {
+            for(Class c : mClasses) {
+                if(c.startDate.get(Calendar.DAY_OF_WEEK) == weekDay) {
+                    classes.add(c);
+                }
+            }
+        }
+        return classes;
+    }
+
+    public ArrayList<Class> getClassesForToday() {
+        int today = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        return getClassesForDay(today);
     }
 
     /* Functions that fetch the data. */
