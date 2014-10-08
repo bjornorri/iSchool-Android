@@ -181,7 +181,7 @@ public class ParserTests extends ApplicationTestCase<Application> {
             assertEquals("The assignment at index 0 should be named hw1", "hw1", assignment.name);
             assertTrue("The assignment at index 0 should be handed in", assignment.handedIn);
             assertEquals("The assignment should have the due date 03.09.2014 23:59", dueDate, assignment.dueDate);
-            assertEquals("The assignment should have the correct URL", "?page=Exe&amp;ID=2.4&amp;ViewMode=2&amp;View=52&amp;verkID=48726&amp;fagid=26711", assignment.URL);
+            assertEquals("The assignment should have the correct URL", "?page=Exe&ID=2.4&ViewMode=2&View=52&verkID=48726&fagid=26711", assignment.URL);
         } else {
             fail("Could not test assignment at index 0");
         }
@@ -199,7 +199,7 @@ public class ParserTests extends ApplicationTestCase<Application> {
             assertEquals("The assignment at index 1 should be named Assignment 3", "Assignment 3", assignment.name);
             assertFalse("The assignment at index 1 should not be handed in", assignment.handedIn);
             assertEquals("The assignment should have the due date 08.09.2014 23:50", dueDate, assignment.dueDate);
-            assertEquals("The assignment should have the correct URL", "?page=Exe&amp;ID=2.4&amp;ViewMode=2&amp;View=52&amp;verkID=48870&amp;fagid=26706", assignment.URL);
+            assertEquals("The assignment should have the correct URL", "?page=Exe&ID=2.4&ViewMode=2&View=52&verkID=48870&fagid=26706", assignment.URL);
         } else {
             fail("Could not test assignment at index 1");
         }
@@ -229,7 +229,7 @@ public class ParserTests extends ApplicationTestCase<Application> {
             assertEquals("The assignment at index 0 should be named Assignment 1", "Assignment 1", assignment.name);
             assertTrue("The assignment at index 0 should be handed in", assignment.handedIn);
             assertEquals("The assignment should have the due date 25.08.2014 23:00", dueDate, assignment.dueDate);
-            assertEquals("The assignment should have the correct URL", "https://myschool.ru.is/myschool/?page=Exe&amp;ID=2.4&amp;ViewMode=2&amp;View=52&amp;verkID=48417&amp;fagid=26706", assignment.URL);
+            assertEquals("The assignment should have the correct URL", "https://myschool.ru.is/myschool/?page=Exe&ID=2.4&ViewMode=2&View=52&verkID=48417&fagid=26706", assignment.URL);
         } else {
             fail("Could not test assignment at index 0");
         }
