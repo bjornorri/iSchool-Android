@@ -156,4 +156,91 @@ public class ParserTests extends ApplicationTestCase<Application> {
             fail("Could not test class (exam) at index 6");
         }
     }
+
+    /* Test the parseAssignments function for a typical assignments page. */
+    public void testParseAssignmentsNormal() {
+        String html = getHTMLFromAssets("assignments_and_grades.html");
+        ArrayList<Assignment> assignments = Parser.parseAssignments(html);
+
+        // Test if all assignments were parsed.
+        assertEquals("There should be 2 assignments", 2, assignments.size());
+
+        // Create a date formatter to easily create Calendar objects.
+        DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+
+        // Test assignment at index 0
+        if(assignments.size() > 0) {
+            Assignment assignment = assignments.get(0);
+            Calendar dueDate = Calendar.getInstance();
+            try {
+                dueDate.setTime(formatter.parse("03.09.2014 23:59"));
+            } catch(ParseException e) {
+                fail("Could not parse date format string");
+            }
+            assertEquals("The assignment at index 0 should be in the course Tölvusamskipti", "Tölvusamskipti", assignment.courseName);
+            assertEquals("The assignment at index 0 should be named hw1", "hw1", assignment.name);
+            assertTrue("The assignment at index 0 should be handed in", assignment.handedIn);
+            assertEquals("The assignment should have the due date 03.09.2014 23:59", dueDate, assignment.dueDate);
+            assertEquals("The assignment should have the correct URL", "?page=Exe&amp;ID=2.4&amp;ViewMode=2&amp;View=52&amp;verkID=48726&amp;fagid=26711", assignment.URL);
+        } else {
+            fail("Could not test assignment at index 0");
+        }
+
+        // Test assignment at index 1
+        if(assignments.size() > 1) {
+            Assignment assignment = assignments.get(1);
+            Calendar dueDate = Calendar.getInstance();
+            try {
+                dueDate.setTime(formatter.parse("08.09.2014 23:50"));
+            } catch(ParseException e) {
+                fail("Could not parse date format string");
+            }
+            assertEquals("The assignment at index 1 should be in the course Stöðuvélar og reiknanleiki", "Stöðuvélar og reiknanleiki", assignment.courseName);
+            assertEquals("The assignment at index 1 should be named Assignment 3", "Assignment 3", assignment.name);
+            assertFalse("The assignment at index 1 should not be handed in", assignment.handedIn);
+            assertEquals("The assignment should have the due date 08.09.2014 23:50", dueDate, assignment.dueDate);
+            assertEquals("The assignment should have the correct URL", "?page=Exe&amp;ID=2.4&amp;ViewMode=2&amp;View=52&amp;verkID=48870&amp;fagid=26706", assignment.URL);
+        } else {
+            fail("Could not test assignment at index 1");
+        }
+    }
+
+    /* Test the parseAssignments function on a page that contains assignments but no grades. */
+    public void testParseAssignments_OnlyAssignments() {
+        String html = getHTMLFromAssets("only_assignments.html");
+        ArrayList<Assignment> assignments = Parser.parseAssignments(html);
+
+        // Test if all assignments were parsed.
+        assertEquals("There should be 1 assignment", 1, assignments.size());
+
+        // Create a date formatter to easily create Calendar objects.
+        DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+
+        // Test assignment at index 0.
+        if(assignments.size() > 0) {
+            Assignment assignment = assignments.get(0);
+            Calendar dueDate = Calendar.getInstance();
+            try {
+                dueDate.setTime(formatter.parse("25.08.2014 23:00"));
+            } catch(ParseException e) {
+                fail("Could not parse date format string");
+            }
+            assertEquals("The assignment at index 0 should be in the course Stöðuvélar og reiknanleiki", "Stöðuvélar og reiknanleiki", assignment.courseName);
+            assertEquals("The assignment at index 0 should be named Assignment 1", "Assignment 1", assignment.name);
+            assertTrue("The assignment at index 0 should be handed in", assignment.handedIn);
+            assertEquals("The assignment should have the due date 25.08.2014 23:00", dueDate, assignment.dueDate);
+            assertEquals("The assignment should have the correct URL", "https://myschool.ru.is/myschool/?page=Exe&amp;ID=2.4&amp;ViewMode=2&amp;View=52&amp;verkID=48417&amp;fagid=26706", assignment.URL);
+        } else {
+            fail("Could not test assignment at index 0");
+        }
+    }
+
+    /* Test the parseAssignments function on a page that contains grades but no assignments. */
+    public void testParseAssignments_OnlyGrades() {
+        String html = getHTMLFromAssets("only_grades.html");
+        ArrayList<Assignment> assignments = Parser.parseAssignments(html);
+
+        // Test if all assignments were parsed.
+        assertEquals("There should be 0 assignments", 0, assignments.size());
+    }
 }
