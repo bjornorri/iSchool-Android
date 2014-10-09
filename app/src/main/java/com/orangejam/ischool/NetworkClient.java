@@ -24,10 +24,6 @@ import java.io.IOException;
 
 public class NetworkClient {
 
-    public static final String Assignments = "https://myschool.ru.is/myschool/?Page=Exe&ID=1.12";
-    public static final String Timetable = "https://myschool.ru.is/myschool/?Page=Exe&ID=3.2";
-    public static final String Canteen = "http://malid.ru.is";
-
     /* Fetches a HTML page from a given URL asynchronously.
      * The caller must provide a success handler and an error handler that get called on success and error. */
     public static void fetchPageAsynchronous(final Context context, final String pageURL, final Handler successHandler, final Handler errorHandler) {
