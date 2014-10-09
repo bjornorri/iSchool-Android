@@ -2,7 +2,15 @@
 <resources>
 
     <string name="app_name">iSchool</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Stillingar</string>
+    <string name="Lecture">Fyrirlestur</string>
+    <string name="Discussion">Dæmatími</string>
+    <string name="Assistance">Viðtalstími</string>
+    <string name="Exam">Próf</string>
+    <string name="Other">Annað</string>
+    <string name="Username">Notendanafn</string>
+    <string name="Password">Lykilorð</string>
+    <string name="invalidCredentials">Rangt notendanafn eða lykilorð, reyndu aftur.</string>
+    <string name="Login">Innskrá</string>
 
 </resources>

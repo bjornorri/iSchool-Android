@@ -1,9 +1,22 @@
-package com.orangejam.ischool;
+package com.orangejam.ischool.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.orangejam.ischool.R;
+import com.orangejam.ischool.modules.CredentialManager;
+import com.orangejam.ischool.modules.DataStore;
+import com.orangejam.ischool.model.Class;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -11,6 +24,11 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(CredentialManager.getUsername(getApplicationContext()) == null) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
         setContentView(R.layout.activity_main);
     }
 

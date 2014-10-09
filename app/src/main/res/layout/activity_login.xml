@@ -1,0 +1,74 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:contentDescription="@null"
+        android:src="@drawable/ru_logo_login" />
+
+    <EditText
+        android:id="@+id/usernameField"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:background="@drawable/rounded_edittext"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="@string/Username"
+        android:textColorHint="#B6B6B4"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/passwordField"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center"
+        android:background="@drawable/rounded_edittext"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="@string/Password"
+        android:textColorHint="#B6B6B4"
+        android:inputType="textPassword" />
+
+    <TextView
+        android:id="@+id/invalidLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginTop="2dp"
+        android:layout_gravity="center"
+        android:textColor="#FF6666"
+        android:text="@string/invalidCredentials"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="214dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="6dp"
+        android:layout_gravity="center"
+        android:textColor="@drawable/login_button_text_color"
+        android:background="@drawable/login_button_background"
+        android:text="@string/Login" />
+
+    <ProgressBar
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="46dp"
+        android:visibility="invisible" />
+
+</LinearLayout>
