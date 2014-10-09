@@ -135,14 +135,14 @@ public class DataStore {
             if(mURL.equals(NetworkClient.Timetable)) {
                 // Broadcast a notification that the data store has finished loading the classes.
                 Intent intent = new Intent();
-                intent.setAction("DataStoreDidFinishLoadingClassesNotification");
+                intent.setAction(Constants.TimetableNotification);
                 LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
             } else if(mURL.equals(NetworkClient.Assignments)) {
                 // Broadcast notifications that the data store has finished loading the assignments and grades.
                 Intent assignmentsIntent = new Intent();
                 Intent gradesIntent = new Intent();
-                assignmentsIntent.setAction("DataStoreDidFinishLoadingAssignmentsNotification");
-                gradesIntent.setAction("DataStoreDidFinishLoadingGradesNotification");
+                assignmentsIntent.setAction(Constants.AssignmentsNotification);
+                gradesIntent.setAction(Constants.GradesNotification);
                 LocalBroadcastManager.getInstance(mContext).sendBroadcast(assignmentsIntent);
                 LocalBroadcastManager.getInstance(mContext).sendBroadcast(gradesIntent);
             }
