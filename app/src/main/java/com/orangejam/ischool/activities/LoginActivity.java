@@ -66,18 +66,6 @@ public class LoginActivity extends ActionBarActivity {
                 Toast.makeText(context, R.string.networkError, Toast.LENGTH_SHORT).show();
             } else if(action.equals(Constants.TimetableNotification)) {
                 Log.d("", "Received timetable notification");
-                classesLoaded = true;
-            } else if(action.equals(Constants.AssignmentsNotification)) {
-                Log.d("", "Received assignments notification");
-                assignmentsLoaded = true;
-            } else if(action.equals(Constants.GradesNotification)) {
-                Log.d("", "Received grades notification");
-                gradesLoaded = true;
-            }
-
-            // If all the data is loaded, present the main activity.
-            if(dataIsLoaded()) {
-                Log.d("", "All data loaded!");
                 Intent newIntent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(newIntent);
                 finish();
@@ -119,8 +107,6 @@ public class LoginActivity extends ActionBarActivity {
         filter.addAction(Constants.InvalidCredentialsNotification);
         filter.addAction(Constants.NetworkErrorNotification);
         filter.addAction(Constants.TimetableNotification);
-        filter.addAction(Constants.AssignmentsNotification);
-        filter.addAction(Constants.GradesNotification);
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mBroadcastReceiver, filter);
     }
 
@@ -157,6 +143,6 @@ public class LoginActivity extends ActionBarActivity {
         String username = mUsernameField.getText().toString();
         String password = mPasswordField.getText().toString();
         CredentialManager.storeCredentials(getApplicationContext(), username, password);
-        DataStore.getInstance(getApplicationContext()).fetchAllData();
+        DataStore.getInstance(getApplicationContext()).fetchClasses();
     }
 }

@@ -9,6 +9,8 @@ import com.orangejam.ischool.model.Class;
 import com.orangejam.ischool.model.Assignment;
 import com.orangejam.ischool.model.Grade;
 
+import org.apache.http.HttpResponse;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -102,13 +104,14 @@ public class DataStore {
         dataFetcher.execute(Constants.AssignmentsURL);
     }
 
-    public void fetchAllData() {
-        fetchClasses();
-        fetchAssignmentsAndGrades();
+    private void broadCastNotification(String action) {
+        Intent intent = new Intent();
+        intent.setAction(action);
+        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
 
     /* AsyncTask that fetches a page and parses it. */
-    private class DataFetcher extends AsyncTask<String, Void, Boolean> {
+    private class DataFetcher extends AsyncTask<String, Void, Integer> {
 
         private Context mContext;
         private String mURL;
@@ -118,44 +121,42 @@ public class DataStore {
         }
 
         @Override
-        protected Boolean doInBackground(String... params) {
+        protected Integer doInBackground(String... params) {
+            // Fetch the page.
             mURL = params[0];
-            String html = null;
-            if(mURL.equals(Constants.TimetableURL)) {
-                html = NetworkClient.fetchPage(mContext, mURL);
-                ArrayList<Class> classes = Parser.parseClasses(html);
-                mClasses = classes;
-            } else if(mURL.equals(Constants.AssignmentsURL)) {
-                html = NetworkClient.fetchPage(mContext, mURL);
-                ArrayList<Assignment> assignments = Parser.parseAssignments(html);
-                ArrayList<Grade> grades = Parser.parseGrades(html);
-                mAssignments = assignments;
-                mGrades = grades;
+            HttpResponse response = NetworkClient.fetchPage(mContext, mURL);
+            if(response == null) {
+                return -1;
             }
-            if(html == null) {
-                return false;
+            // Check the status code.
+            int statusCode = response.getStatusLine().getStatusCode();
+            if(statusCode == 200) {
+                String html = response.getEntity().toString();
+                if(mURL.equals(Constants.TimetableURL)) {
+                    Parser.parseClasses(html);
+                } else if(mURL.equals(Constants.AssignmentsURL)) {
+                    Parser.parseAssignments(html);
+                }
             }
-            return true;
+            return statusCode;
         }
 
         @Override
-        protected void onPostExecute(Boolean success) {
-            super.onPostExecute(success);
-            if(success) {
+        protected void onPostExecute(Integer statusCode) {
+            super.onPostExecute(statusCode);
+            if(statusCode.equals(200)) {
                 if(mURL.equals(Constants.TimetableURL)) {
                     // Broadcast a notification that the data store has finished loading the classes.
-                    Intent intent = new Intent();
-                    intent.setAction(Constants.TimetableNotification);
-                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+                    broadCastNotification(Constants.TimetableNotification);
                 } else if(mURL.equals(Constants.AssignmentsURL)) {
                     // Broadcast notifications that the data store has finished loading the assignments and grades.
-                    Intent assignmentsIntent = new Intent();
-                    Intent gradesIntent = new Intent();
-                    assignmentsIntent.setAction(Constants.AssignmentsNotification);
-                    gradesIntent.setAction(Constants.GradesNotification);
-                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(assignmentsIntent);
-                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(gradesIntent);
+                    broadCastNotification(Constants.AssignmentsNotification);
+                    broadCastNotification(Constants.GradesNotification);
                 }
+            } else if(statusCode.equals(401)) {
+                broadCastNotification(Constants.InvalidCredentialsNotification);
+            } else {
+                broadCastNotification(Constants.NetworkErrorNotification);
             }
         }
     }
