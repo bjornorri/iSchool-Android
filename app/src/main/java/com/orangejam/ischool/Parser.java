@@ -25,6 +25,9 @@ public class Parser {
 
     public static ArrayList<Class> parseClasses(String html) {
         ArrayList<Class> classes = new ArrayList<Class>();
+        if(html == null) {
+            return classes;
+        }
         // Create a Jsoup Document object.
         Document page = Jsoup.parse(html);
         String query = "div.ruContentPage > center:eq(0) > table > tbody > tr";
@@ -144,6 +147,9 @@ public class Parser {
 
     public static ArrayList<Assignment> parseAssignments(String html) {
         ArrayList<Assignment> assignments = new ArrayList<Assignment>();
+        if(html == null) {
+            return assignments;
+        }
         // Create a Jsoup Document object.
         Document page = Jsoup.parse(html);
         String query = "div.ruContentPage > center > table";
@@ -218,7 +224,9 @@ public class Parser {
 
     public static ArrayList<Grade> parseGrades(String html) {
         ArrayList<Grade> grades = new ArrayList<Grade>();
-
+        if(html == null) {
+            return grades;
+        }
         // Create a Jsoup Document object.
         Document page = Jsoup.parse(html);
         String query = "div.ruContentPage > center > table";
