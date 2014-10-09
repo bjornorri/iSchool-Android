@@ -102,6 +102,11 @@ public class DataStore {
         dataFetcher.execute(Constants.AssignmentsURL);
     }
 
+    public void fetchAllData() {
+        fetchClasses();
+        fetchAssignmentsAndGrades();
+    }
+
     /* AsyncTask that fetches a page and parses it. */
     private class DataFetcher extends AsyncTask<String, Void, Void> {
 
