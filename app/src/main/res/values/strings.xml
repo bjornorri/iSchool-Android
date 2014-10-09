@@ -12,5 +12,6 @@
     <string name="Password">Lykilorð</string>
     <string name="invalidCredentials">Rangt notendanafn eða lykilorð, reyndu aftur.</string>
     <string name="Login">Innskrá</string>
+    <string name="networkError">Netvilla!</string>
 
 </resources>

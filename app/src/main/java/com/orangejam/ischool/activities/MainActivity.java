@@ -29,6 +29,7 @@ public class MainActivity extends ActionBarActivity {
             startActivity(intent);
             finish();
         }
+        CredentialManager.clearCredentials(getApplicationContext());
         setContentView(R.layout.activity_main);
     }
 

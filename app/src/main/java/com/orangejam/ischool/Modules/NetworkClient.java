@@ -15,6 +15,9 @@ import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
@@ -41,8 +44,14 @@ public class NetworkClient {
         CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         credentialsProvider.setCredentials(new AuthScope(AuthScope.ANY_HOST, AuthScope.ANY_PORT),
                 new UsernamePasswordCredentials(username, password));
+
+        // Set a timeout for the request.
+        int timeout = 10 * 1000;
+        HttpParams params = new BasicHttpParams();
+        HttpConnectionParams.setConnectionTimeout(params, timeout);
+
         // Create the HTTP client.
-        DefaultHttpClient httpClient = new DefaultHttpClient();
+        DefaultHttpClient httpClient = new DefaultHttpClient(params);
         httpClient.setCredentialsProvider(credentialsProvider);
         // Craft the request.
         HttpGet getRequest = new HttpGet(pageURL);
@@ -74,6 +83,10 @@ public class NetworkClient {
             Log.d("NetworkClient", "Client protocol exception", e);
         } catch(IOException e) {
             Log.d("NetworkClient", "IOException", e);
+            // Broadcast network error notification.
+            Intent intent = new Intent();
+            intent.setAction(Constants.NetworkErrorNotification);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
         }
         return html;
     }
