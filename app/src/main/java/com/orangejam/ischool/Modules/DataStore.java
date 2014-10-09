@@ -1,4 +1,4 @@
-package com.orangejam.ischool;
+package com.orangejam.ischool.modules;
 
 import android.content.Context;
 import android.content.Intent;
@@ -93,13 +93,13 @@ public class DataStore {
     public void fetchClasses() {
         DataFetcher dataFetcher = new DataFetcher();
         dataFetcher.setContext(mContext);
-        dataFetcher.execute(NetworkClient.Timetable);
+        dataFetcher.execute(Constants.TimetableURL);
     }
 
     public void fetchAssignmentsAndGrades() {
         DataFetcher dataFetcher = new DataFetcher();
         dataFetcher.setContext(mContext);
-        dataFetcher.execute(NetworkClient.Assignments);
+        dataFetcher.execute(Constants.AssignmentsURL);
     }
 
     /* AsyncTask that fetches a page and parses it. */
@@ -115,11 +115,11 @@ public class DataStore {
         @Override
         protected Void doInBackground(String... params) {
             mURL = params[0];
-            if(mURL.equals(NetworkClient.Timetable)) {
+            if(mURL.equals(Constants.TimetableURL)) {
                 String html = NetworkClient.fetchPage(mContext, mURL);
                 ArrayList<Class> classes = Parser.parseClasses(html);
                 mClasses = classes;
-            } else if(mURL.equals(NetworkClient.Assignments)) {
+            } else if(mURL.equals(Constants.AssignmentsURL)) {
                 String html = NetworkClient.fetchPage(mContext, mURL);
                 ArrayList<Assignment> assignments = Parser.parseAssignments(html);
                 ArrayList<Grade> grades = Parser.parseGrades(html);
@@ -132,12 +132,12 @@ public class DataStore {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            if(mURL.equals(NetworkClient.Timetable)) {
+            if(mURL.equals(Constants.TimetableURL)) {
                 // Broadcast a notification that the data store has finished loading the classes.
                 Intent intent = new Intent();
                 intent.setAction(Constants.TimetableNotification);
                 LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
-            } else if(mURL.equals(NetworkClient.Assignments)) {
+            } else if(mURL.equals(Constants.AssignmentsURL)) {
                 // Broadcast notifications that the data store has finished loading the assignments and grades.
                 Intent assignmentsIntent = new Intent();
                 Intent gradesIntent = new Intent();

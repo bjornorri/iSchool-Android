@@ -1,4 +1,4 @@
-package com.orangejam.ischool;
+package com.orangejam.ischool.modules;
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -1,4 +1,4 @@
-package com.orangejam.ischool;
+package com.orangejam.ischool.modules;
 
 /**
  * Created by bjornorri on 09/10/14.

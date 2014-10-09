@@ -4,9 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.test.ApplicationTestCase;
-import android.util.Log;
 
-import junit.framework.Assert;
+import com.orangejam.ischool.modules.CredentialManager;
 
 /**
  * Created by bjornorri on 07/10/14.
