@@ -2,27 +2,29 @@ package com.orangejam.ischool.activities;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.orangejam.ischool.R;
+import com.orangejam.ischool.adapters.TabsPagerAdapter;
 import com.orangejam.ischool.modules.CredentialManager;
-import com.orangejam.ischool.modules.DataStore;
-import com.orangejam.ischool.model.Class;
 
 import java.util.ArrayList;
 
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
+
+    private ViewPager mViewPager;
+    private TabsPagerAdapter mAdapter;
+    private ActionBar mActionBar;
+
+    // Tab titles.
+    private String[] mTabs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +34,23 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             startActivity(intent);
             finish();
         }
-        CredentialManager.clearCredentials(getApplicationContext());
         setContentView(R.layout.activity_main);
+
+        // Initialization.
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mActionBar = getActionBar();
+        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+
+        mViewPager.setAdapter(mAdapter);
+        mActionBar.setHomeButtonEnabled(false);
+        mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        // Adding Tabs
+        Resources res = getResources();
+        mTabs = new String[]{res.getString(R.string.Timetable), res.getString(R.string.Assignments), res.getString(R.string.Grades)};
+        for (String tab_name : mTabs) {
+            mActionBar.addTab(mActionBar.newTab().setText(tab_name).setTabListener(this));
+        }
     }
 
 
@@ -70,4 +87,5 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
     }
+
 }

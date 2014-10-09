@@ -13,5 +13,9 @@
     <string name="invalidCredentials">Rangt notendanafn eða lykilorð, reyndu aftur.</string>
     <string name="Login">Innskrá</string>
     <string name="networkError">Netvilla!</string>
+    <string name="Timetable">Stundatafla</string>
+    <string name="Assignments">Verkefni</string>
+    <string name="Grades">Einkunnir</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
