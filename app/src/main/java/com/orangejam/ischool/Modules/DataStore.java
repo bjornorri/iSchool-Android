@@ -108,7 +108,7 @@ public class DataStore {
     }
 
     /* AsyncTask that fetches a page and parses it. */
-    private class DataFetcher extends AsyncTask<String, Void, Void> {
+    private class DataFetcher extends AsyncTask<String, Void, Boolean> {
 
         private Context mContext;
         private String mURL;
@@ -118,38 +118,44 @@ public class DataStore {
         }
 
         @Override
-        protected Void doInBackground(String... params) {
+        protected Boolean doInBackground(String... params) {
             mURL = params[0];
+            String html = null;
             if(mURL.equals(Constants.TimetableURL)) {
-                String html = NetworkClient.fetchPage(mContext, mURL);
+                html = NetworkClient.fetchPage(mContext, mURL);
                 ArrayList<Class> classes = Parser.parseClasses(html);
                 mClasses = classes;
             } else if(mURL.equals(Constants.AssignmentsURL)) {
-                String html = NetworkClient.fetchPage(mContext, mURL);
+                html = NetworkClient.fetchPage(mContext, mURL);
                 ArrayList<Assignment> assignments = Parser.parseAssignments(html);
                 ArrayList<Grade> grades = Parser.parseGrades(html);
                 mAssignments = assignments;
                 mGrades = grades;
             }
-            return null;
+            if(html == null) {
+                return false;
+            }
+            return true;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            if(mURL.equals(Constants.TimetableURL)) {
-                // Broadcast a notification that the data store has finished loading the classes.
-                Intent intent = new Intent();
-                intent.setAction(Constants.TimetableNotification);
-                LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
-            } else if(mURL.equals(Constants.AssignmentsURL)) {
-                // Broadcast notifications that the data store has finished loading the assignments and grades.
-                Intent assignmentsIntent = new Intent();
-                Intent gradesIntent = new Intent();
-                assignmentsIntent.setAction(Constants.AssignmentsNotification);
-                gradesIntent.setAction(Constants.GradesNotification);
-                LocalBroadcastManager.getInstance(mContext).sendBroadcast(assignmentsIntent);
-                LocalBroadcastManager.getInstance(mContext).sendBroadcast(gradesIntent);
+        protected void onPostExecute(Boolean success) {
+            super.onPostExecute(success);
+            if(success) {
+                if(mURL.equals(Constants.TimetableURL)) {
+                    // Broadcast a notification that the data store has finished loading the classes.
+                    Intent intent = new Intent();
+                    intent.setAction(Constants.TimetableNotification);
+                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+                } else if(mURL.equals(Constants.AssignmentsURL)) {
+                    // Broadcast notifications that the data store has finished loading the assignments and grades.
+                    Intent assignmentsIntent = new Intent();
+                    Intent gradesIntent = new Intent();
+                    assignmentsIntent.setAction(Constants.AssignmentsNotification);
+                    gradesIntent.setAction(Constants.GradesNotification);
+                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(assignmentsIntent);
+                    LocalBroadcastManager.getInstance(mContext).sendBroadcast(gradesIntent);
+                }
             }
         }
     }
