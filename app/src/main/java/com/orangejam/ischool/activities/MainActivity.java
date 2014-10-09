@@ -51,6 +51,25 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         for (String tab_name : mTabs) {
             mActionBar.addTab(mActionBar.newTab().setText(tab_name).setTabListener(this));
         }
+
+        // Select the appropriate tab when swiped between.
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                // on changing the page
+                // make respected tab selected
+                mActionBar.setSelectedNavigationItem(position);
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+            }
+        });
     }
 
 
@@ -75,7 +94,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-
+        mViewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override
