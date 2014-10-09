@@ -1,8 +1,10 @@
 package com.orangejam.ischool.modules;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import org.apache.http.HttpResponse;
@@ -56,6 +58,17 @@ public class NetworkClient {
             // If the request was not successful send the error handler a message containing the status code.
             else {
                 html = null;
+                // 401 Unauthorized
+                if(statusCode == 401) {
+                    // Send a broadcast message.
+                    Intent intent = new Intent();
+                    intent.setAction(Constants.InvalidCredentialsNotification);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                } else {
+                    Intent intent = new Intent();
+                    intent.setAction(Constants.NetworkErrorNotification);
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+                }
             }
         } catch(ClientProtocolException e) {
             Log.d("NetworkClient", "Client protocol exception", e);
