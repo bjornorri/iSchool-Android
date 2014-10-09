@@ -16,4 +16,6 @@ public class Constants {
     public static final String TimetableNotification = "DataStoreDidFinishLoadingClassesNotification";
     public static final String AssignmentsNotification = "DataStoreDidFinishLoadingAssignmentsNotification";
     public static final String GradesNotification = "DataStoreDidFinishLoadingGradesNotification";
+    public static final String InvalidCredentialsNotification = "NetworkClientReceivedInvalidCredentialsNotification";
+    public static final String NetworkErrorNotification = "DataStoreDidEncounterNetworkErrorNotification";
 }
