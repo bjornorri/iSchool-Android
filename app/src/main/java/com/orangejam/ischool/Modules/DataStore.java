@@ -10,8 +10,11 @@ import com.orangejam.ischool.model.Class;
 import com.orangejam.ischool.model.Assignment;
 import com.orangejam.ischool.model.Grade;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -132,12 +135,16 @@ public class DataStore {
             // Check the status code.
             int statusCode = response.getStatusLine().getStatusCode();
             if(statusCode == 200) {
-                String html = response.getEntity().toString();
-                if(mURL.equals(Constants.TimetableURL)) {
-                    mClasses = Parser.parseClasses(html);
-                } else if(mURL.equals(Constants.AssignmentsURL)) {
-                    mAssignments = Parser.parseAssignments(html);
-                    mGrades = Parser.parseGrades(html);
+                try {
+                    String html = EntityUtils.toString(response.getEntity());
+                    if(mURL.equals(Constants.TimetableURL)) {
+                        mClasses = Parser.parseClasses(html);
+                    } else if(mURL.equals(Constants.AssignmentsURL)) {
+                        mAssignments = Parser.parseAssignments(html);
+                        mGrades = Parser.parseGrades(html);
+                    }
+                } catch(IOException e) {
+                    Log.d("DataStore", "IOException", e);
                 }
             }
             return statusCode;
@@ -150,6 +157,7 @@ public class DataStore {
                 if(mURL.equals(Constants.TimetableURL)) {
                     // Broadcast a notification that the data store has finished loading the classes.
                     broadCastNotification(Constants.TimetableNotification);
+                    Log.d("", "There are " + mClasses.size() + " classes in the data store.");
                 } else if(mURL.equals(Constants.AssignmentsURL)) {
                     // Broadcast notifications that the data store has finished loading the assignments and grades.
                     broadCastNotification(Constants.AssignmentsNotification);
