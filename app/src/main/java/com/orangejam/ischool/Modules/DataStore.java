@@ -157,7 +157,6 @@ public class DataStore {
                 if(mURL.equals(Constants.TimetableURL)) {
                     // Broadcast a notification that the data store has finished loading the classes.
                     broadCastNotification(Constants.TimetableNotification);
-                    Log.d("", "There are " + mClasses.size() + " classes in the data store.");
                 } else if(mURL.equals(Constants.AssignmentsURL)) {
                     // Broadcast notifications that the data store has finished loading the assignments and grades.
                     broadCastNotification(Constants.AssignmentsNotification);

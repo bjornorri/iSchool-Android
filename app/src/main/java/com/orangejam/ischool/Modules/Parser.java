@@ -26,6 +26,7 @@ public class Parser {
     public static ArrayList<Class> parseClasses(String html) {
         ArrayList<Class> classes = new ArrayList<Class>();
         if(html == null) {
+            Log.d("Parser", "Html was null!");
             return classes;
         }
         // Create a Jsoup Document object.
@@ -92,6 +93,12 @@ public class Parser {
                         for(Element classSpan : classSpans) {
                             String infoString = classSpan.attr("title");
                             String[] info = infoString.split("\n");
+
+                            // Remove junk byte from end of each line.
+                            for(int j = 0; j < info.length; j++) {
+                                String str = info[j];
+                                info[j] = str.substring(0, str.length() - 1);
+                            }
                             // Get the course name.
                             String courseName = "";
                             if(info.length > 0) {

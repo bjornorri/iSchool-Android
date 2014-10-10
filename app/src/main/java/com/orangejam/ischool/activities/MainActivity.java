@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import com.orangejam.ischool.R;
 import com.orangejam.ischool.adapters.TabsPagerAdapter;
 import com.orangejam.ischool.modules.CredentialManager;
+import com.orangejam.ischool.modules.DataStore;
 
 import java.util.ArrayList;
 
@@ -33,43 +34,46 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
+        } else {
+            //CredentialManager.clearCredentials(getApplicationContext());
+            setContentView(R.layout.activity_main);
+
+            // Initialization.
+            mViewPager = (ViewPager) findViewById(R.id.pager);
+            mActionBar = getActionBar();
+            mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+
+            mViewPager.setAdapter(mAdapter);
+            // Is this needed? mActionBar.setHomeButtonEnabled(false);
+            mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+            // Adding Tabs
+            Resources res = getResources();
+            mTabs = new String[]{res.getString(R.string.Timetable), res.getString(R.string.Assignments), res.getString(R.string.Grades)};
+            for (String tab_name : mTabs) {
+                mActionBar.addTab(mActionBar.newTab().setText(tab_name).setTabListener(this));
+            }
+
+            // Select the appropriate tab when swiped between.
+            mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+                @Override
+                public void onPageSelected(int position) {
+                    // on changing the page
+                    // make respected tab selected
+                    mActionBar.setSelectedNavigationItem(position);
+                }
+
+                @Override
+                public void onPageScrolled(int arg0, float arg1, int arg2) {
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int arg0) {
+                }
+            });
+            DataStore.getInstance(getApplicationContext()).fetchClasses();
         }
-        setContentView(R.layout.activity_main);
-
-        // Initialization.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mActionBar = getActionBar();
-        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
-
-        mViewPager.setAdapter(mAdapter);
-        mActionBar.setHomeButtonEnabled(false);
-        mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-        // Adding Tabs
-        Resources res = getResources();
-        mTabs = new String[]{res.getString(R.string.Timetable), res.getString(R.string.Assignments), res.getString(R.string.Grades)};
-        for (String tab_name : mTabs) {
-            mActionBar.addTab(mActionBar.newTab().setText(tab_name).setTabListener(this));
-        }
-
-        // Select the appropriate tab when swiped between.
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            @Override
-            public void onPageSelected(int position) {
-                // on changing the page
-                // make respected tab selected
-                mActionBar.setSelectedNavigationItem(position);
-            }
-
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int arg0) {
-            }
-        });
     }
 
 
