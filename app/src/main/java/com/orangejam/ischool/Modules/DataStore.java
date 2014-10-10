@@ -133,9 +133,10 @@ public class DataStore {
             if(statusCode == 200) {
                 String html = response.getEntity().toString();
                 if(mURL.equals(Constants.TimetableURL)) {
-                    Parser.parseClasses(html);
+                    mClasses = Parser.parseClasses(html);
                 } else if(mURL.equals(Constants.AssignmentsURL)) {
-                    Parser.parseAssignments(html);
+                    mAssignments = Parser.parseAssignments(html);
+                    mGrades = Parser.parseGrades(html);
                 }
             }
             return statusCode;
