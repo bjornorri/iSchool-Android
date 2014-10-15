@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import com.orangejam.ischool.R;
 import com.orangejam.ischool.adapters.TimetableAdapter;
@@ -34,7 +33,7 @@ public class TimetableFragment extends ListFragment {
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("TimetableFragment", "Received!!!");
+            Log.d("TimetableFragment", "Received!!!" + intent.getAction());
             mSwipeLayout.setRefreshing(false);
             if(intent.getAction().equals(Constants.TimetableNotification)) {
                 Log.d("TimetableFragment", "Updating list view");

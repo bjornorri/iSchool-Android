@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.orangejam.ischool.fragments.AssignmentTableFragment;
 import com.orangejam.ischool.fragments.TimetableFragment;
 
 /**
@@ -21,7 +22,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new TimetableFragment();
             case 1:
-                return new TimetableFragment();
+                return new AssignmentTableFragment();
             case 2:
                 return new TimetableFragment();
         }

@@ -73,6 +73,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 }
             });
             DataStore.getInstance(getApplicationContext()).fetchClasses();
+            DataStore.getInstance(getApplicationContext()).fetchAssignmentsAndGrades();
         }
     }
 

@@ -10,7 +10,7 @@ import com.orangejam.ischool.model.Class;
 import com.orangejam.ischool.model.Assignment;
 import com.orangejam.ischool.model.Grade;
 
-import org.apache.http.HttpEntity;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 
@@ -140,6 +140,7 @@ public class DataStore {
                     if(mURL.equals(Constants.TimetableURL)) {
                         mClasses = Parser.parseClasses(html);
                     } else if(mURL.equals(Constants.AssignmentsURL)) {
+                        Log.d("", "Here!!?!?!?!?!");
                         mAssignments = Parser.parseAssignments(html);
                         mGrades = Parser.parseGrades(html);
                     }
@@ -159,6 +160,10 @@ public class DataStore {
                     broadCastNotification(Constants.TimetableNotification);
                 } else if(mURL.equals(Constants.AssignmentsURL)) {
                     // Broadcast notifications that the data store has finished loading the assignments and grades.
+                    Log.i("","Broadcasting assignments and grades notification");
+                    for(Assignment a : mAssignments) {
+                        Log.d("", a.name);
+                    }
                     broadCastNotification(Constants.AssignmentsNotification);
                     broadCastNotification(Constants.GradesNotification);
                 }
