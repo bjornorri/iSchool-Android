@@ -86,11 +86,11 @@ public class AssignmentAdapter extends ArrayAdapter {
             holder.checkImage.setVisibility(View.INVISIBLE);
         }
 
-        DateFormat formatter = new SimpleDateFormat("HH:mm");
+        DateFormat formatter = new SimpleDateFormat("dd.MM");
 
         holder.nameLabel.setText(a.name);
         holder.courseLabel.setText(a.courseName);
-   //     holder.dateLabel.setText(formatter.format(a.dueDate));
+        holder.dateLabel.setText(formatter.format(a.dueDate.getTime()));
 
 
         return row;
