@@ -42,7 +42,6 @@ public class GradeAdapter extends ArrayAdapter {
         if(mGrades == null) {
             return 0;
         }
-
         return mGrades.size();
     }
 
@@ -92,7 +91,6 @@ public class GradeAdapter extends ArrayAdapter {
 
     static class GradeHolder
     {
-
         TextView nameLabel;
         TextView rankLabel;
         TextView gradeLabel;
