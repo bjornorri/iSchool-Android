@@ -40,10 +40,8 @@ public class GradeFragment extends ListFragment {
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("GradeFragment", "Received!!!" + intent.getAction());
             mSwipeLayout.setRefreshing(false);
             if(intent.getAction().equals(Constants.GradesNotification)) {
-                Log.d("GradeFragment", "Updating list view");
                 mGrades.clear();
                 mGrades.addAll(DataStore.getInstance(context).getGrades());
                 mAdapter.notifyDataSetChanged();
@@ -64,7 +62,6 @@ public class GradeFragment extends ListFragment {
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.d("GradeFragment", "Refreshing");
                 DataStore.getInstance(getActivity().getApplicationContext()).fetchAssignmentsAndGrades();
 
             }
@@ -98,7 +95,6 @@ public class GradeFragment extends ListFragment {
         filter.addAction(Constants.NetworkErrorNotification);
         LocalBroadcastManager.getInstance(mContext).registerReceiver(mBroadcastReceiver, filter);
         DataStore.getInstance(mContext).fetchAssignmentsAndGrades();
-        Log.d("gradeFragment", "Registered receiver");
     }
 
     @Override
@@ -107,7 +103,6 @@ public class GradeFragment extends ListFragment {
 
         // Unregister broadcast receiver.
         LocalBroadcastManager.getInstance(mContext).unregisterReceiver(mBroadcastReceiver);
-        Log.d("GradeFragment", "Unregistered receiver");
     }
 
 

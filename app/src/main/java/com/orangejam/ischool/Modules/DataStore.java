@@ -140,7 +140,6 @@ public class DataStore {
                     if(mURL.equals(Constants.TimetableURL)) {
                         mClasses = Parser.parseClasses(html);
                     } else if(mURL.equals(Constants.AssignmentsURL)) {
-                        Log.d("", "Here!!?!?!?!?!");
                         mAssignments = Parser.parseAssignments(html);
                         mGrades = Parser.parseGrades(html);
                     }

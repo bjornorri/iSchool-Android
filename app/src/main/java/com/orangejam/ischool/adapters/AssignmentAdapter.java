@@ -2,7 +2,6 @@ package com.orangejam.ischool.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,6 @@ import android.widget.TextView;
 
 import com.orangejam.ischool.R;
 import com.orangejam.ischool.model.*;
-
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -39,7 +36,6 @@ public class AssignmentAdapter extends ArrayAdapter {
 
     @Override
     public int getCount() {
-        Log.d("assignmentFragment", "getCount" + mAssignments.size());
         if(mAssignments == null) {
             return 0;
         }

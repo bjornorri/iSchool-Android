@@ -41,10 +41,8 @@ public class AssignmentTableFragment extends ListFragment {
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("assignmentFragment", "Received!!!" + intent.getAction());
             mSwipeLayout.setRefreshing(false);
             if(intent.getAction().equals(Constants.AssignmentsNotification)) {
-                Log.d("assignmentFragment", "Updating list view");
                 mAssignments.clear();
                 mAssignments.addAll(DataStore.getInstance(context).getAssignments());
                 mAdapter.notifyDataSetChanged();
@@ -65,7 +63,6 @@ public class AssignmentTableFragment extends ListFragment {
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.d("assignmentFragment", "Refreshing");
                 DataStore.getInstance(getActivity().getApplicationContext()).fetchAssignmentsAndGrades();
 
             }
@@ -97,7 +94,6 @@ public class AssignmentTableFragment extends ListFragment {
         filter.addAction(Constants.NetworkErrorNotification);
         LocalBroadcastManager.getInstance(mContext).registerReceiver(mBroadcastReceiver, filter);
         DataStore.getInstance(mContext).fetchAssignmentsAndGrades();
-        Log.d("assignmentsFragment", "Registered receiver");
     }
 
     @Override
@@ -106,7 +102,6 @@ public class AssignmentTableFragment extends ListFragment {
 
         // Unregister broadcast receiver.
         LocalBroadcastManager.getInstance(mContext).unregisterReceiver(mBroadcastReceiver);
-        Log.d("assignmentsFragment", "Unregistered receiver");
     }
 
 
