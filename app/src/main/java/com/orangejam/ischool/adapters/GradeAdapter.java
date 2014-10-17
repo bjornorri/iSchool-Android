@@ -53,7 +53,8 @@ public class GradeAdapter extends ArrayAdapter {
         }
 
         Log.i("","counter is: " + counter);
-      return counter;
+        return counter;
+
     }
 
 
@@ -129,16 +130,13 @@ public class GradeAdapter extends ArrayAdapter {
     }
 
 
-    static class GradeHolder
-    {
-
+    static class GradeHolder {
         TextView nameLabel;
         TextView rankLabel;
         TextView gradeLabel;
     }
 
-    static class CourseHolder
-    {
+    static class CourseHolder {
         TextView nameLabel;
     }
 }
