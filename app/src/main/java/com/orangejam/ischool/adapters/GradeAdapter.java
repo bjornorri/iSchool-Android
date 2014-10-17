@@ -15,6 +15,7 @@ import com.orangejam.ischool.model.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -34,25 +35,34 @@ public class GradeAdapter extends ArrayAdapter {
         mContext = mActivity.getApplicationContext();
         mResourceId = resource;
         mGrades = data;
-    }
 
-    @Override
-    public int getCount() {
-
+        Log.i("","stuff. " + mGrades.size());
         String courseName = "";
         int counter = 0;
         for(Grade g : mGrades) {
-
-            if(courseName != g.courseName){
-                Log.i("","counter in now : "+ counter);
+            if(!courseName.equals(g.courseName)){
                 counter ++;
                 courseName = g.courseName;
             }
+            Log.i("","adding to map: " + map.size());
             map.put(counter, g);
             counter ++;
         }
 
-        Log.i("","counter is: " + counter);
+    }
+
+    @Override
+    public int getCount() {
+        String courseName = "";
+        int counter = 0;
+        for(Grade g : mGrades) {
+            if(!courseName.equals(g.courseName)){
+                counter ++;
+                courseName = g.courseName;
+            }
+           // map.put(counter, g);
+            counter ++;
+        }
         return counter;
 
     }
@@ -63,51 +73,39 @@ public class GradeAdapter extends ArrayAdapter {
         return false;
     }
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
         View row = convertView;
-       // Grade g = map.get(position);
-        Grade g = mGrades.get(0);
+        Grade g = map.get(position);
 
         if(g == null) {
             CourseHolder holder = null;
-            if(row == null)
-            {
-                LayoutInflater inflater = ((Activity) mActivity).getLayoutInflater();
-                row = inflater.inflate(R.layout.grade_header, parent, false);
 
-                holder = new CourseHolder();
-                holder.nameLabel = (TextView)row.findViewById(R.id.gradeHeader);
-                row.setTag(holder);
-            }
-            else
-            {
-                holder = (CourseHolder)row.getTag();
-            }
+            LayoutInflater inflater = ((Activity) mActivity).getLayoutInflater();
+            row = inflater.inflate(R.layout.grade_header, parent, false);
 
-            holder.nameLabel.setText(mGrades.get(0).courseName);
+            holder = new CourseHolder();
+            holder.nameLabel = (TextView)row.findViewById(R.id.gradeHeader);
+            row.setTag(holder);
+
+
+            holder.nameLabel.setText(map.get(position + 1).courseName);
 
         } else {
 
 
             GradeHolder holder = null;
-            if(row == null) {
 
-                LayoutInflater inflater = ((Activity) mActivity).getLayoutInflater();
-                row = inflater.inflate(mResourceId, parent, false);
+            LayoutInflater inflater = ((Activity) mActivity).getLayoutInflater();
+            row = inflater.inflate(mResourceId, parent, false);
 
-                holder = new GradeHolder();
-                holder.gradeLabel = (TextView)row.findViewById(R.id.gradeGradeLabel);
-                holder.nameLabel = (TextView)row.findViewById(R.id.gradeNameLabel);
-                holder.rankLabel = (TextView)row.findViewById(R.id.gradeRankLabel);
-                row.setTag(holder);
-
-            } else {
-                holder = (GradeHolder)row.getTag();
-            }
-
-           // Grade g = mGrades.get(0);
+            holder = new GradeHolder();
+            holder.gradeLabel = (TextView)row.findViewById(R.id.gradeGradeLabel);
+            holder.nameLabel = (TextView)row.findViewById(R.id.gradeNameLabel);
+            holder.rankLabel = (TextView)row.findViewById(R.id.gradeRankLabel);
+            row.setTag(holder);
 
             String rank ="";
             String grade = "";
@@ -122,10 +120,9 @@ public class GradeAdapter extends ArrayAdapter {
 
             holder.nameLabel.setText(g.assignmentName);
             holder.rankLabel.setText(rank);
-            holder.gradeLabel.setText(grade);
+            holder.gradeLabel.setText(grade.replace(".", ","));
 
-
-          }
+      }
         return row;
     }
 
