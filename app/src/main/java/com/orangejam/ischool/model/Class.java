@@ -40,6 +40,10 @@ public class Class implements Comparable<Class> {
         return (now.after(this.startDate) && now.before(this.endDate));
     }
 
+    public boolean isToday() {
+        return startDate.get(Calendar.DAY_OF_WEEK) == Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+    }
+
     @Override
     public boolean equals(Object o) {
         if(o == this) {

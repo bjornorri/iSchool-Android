@@ -72,20 +72,13 @@ public class TimetableAdapter extends ArrayAdapter {
         }
         Class c = mClasses.get(position);
 
-        if(c.type.equals(Class.Lecture))
-        {
+        if (c.type.equals(Class.Lecture)) {
             holder.typeImage.setImageResource(R.drawable.lecture);
-        }
-        else if(c.type.equals(Class.Discussion))
-        {
+        } else if (c.type.equals(Class.Discussion)) {
             holder.typeImage.setImageResource(R.drawable.discussion);
-        }
-        else if(c.type.equals(Class.Assistance))
-        {
+        } else if (c.type.equals(Class.Assistance)) {
             holder.typeImage.setImageResource(R.drawable.assistance);
-        }
-        else
-        {
+        } else {
             holder.typeImage.setImageResource(R.drawable.rulogo);
         }
 

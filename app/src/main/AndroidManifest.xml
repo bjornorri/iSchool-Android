@@ -27,6 +27,14 @@
             android:theme="@style/AppTheme"
             android:label="@string/app_name" >
         </activity>
+        <receiver android:name=".modules.iSchoolAppWidgetProvider" android:label="Next Class">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.something.MyWidget.ACTION_WIDGET_RECEIVER"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/appwidget_info"/>
+        </receiver>
+        <service android:enabled="true" android:name=".modules.UpdateWidgetService" />
     </application>
 
 </manifest>

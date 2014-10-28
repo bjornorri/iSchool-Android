@@ -16,6 +16,9 @@
     <string name="Timetable">Stundatafla</string>
     <string name="Assignments">Verkefni</string>
     <string name="Grades">Einkunnir</string>
+    <string name="Now">Núna</string>
+    <string name="Today">Í dag</string>
+    <string name="Tomorrow">Á morgun</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Icon">Icon</string>
 

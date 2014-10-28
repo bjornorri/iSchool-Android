@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF">
 
     <ImageView
         android:id="@+id/typeImage"
@@ -26,6 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:textColor="@android:color/black"
             android:textSize="16sp" />
 
         <TextView
@@ -34,6 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/courseLabel"
             android:layout_alignLeft="@id/courseLabel"
+            android:textColor="#808080"
             android:textSize="14sp" />
 
         <TextView
@@ -42,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/typeLabel"
             android:layout_alignLeft="@id/typeLabel"
+            android:textColor="#808080"
             android:textSize="14sp" />
 
     </RelativeLayout>
@@ -51,6 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
+        android:textColor="#808080"
         android:layout_marginRight="20dp" >
 
         <TextView
@@ -59,6 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:gravity="right"
+            android:textColor="#808080"
             android:textSize="14sp" />
 
         <TextView
@@ -68,14 +74,9 @@
             android:layout_below="@id/startLabel"
             android:layout_alignRight="@id/startLabel"
             android:gravity="right"
+            android:textColor="#808080"
             android:textSize="14sp" />
 
     </RelativeLayout>
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:background="#DEDEDE" />
 
 </RelativeLayout>
