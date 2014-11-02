@@ -35,13 +35,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             finish();
         }
         else if (! DataStore.getInstance(getApplicationContext()).loadData()){
-            Log.i("","starting splash");
+
             Intent intent = new Intent(this, SplashActivity.class);
             startActivity(intent);
             finish();
         }
         else {
-            Log.i("","else");
+
             //CredentialManager.clearCredentials(getApplicationContext());
             setContentView(R.layout.activity_main);
             // Initialization.

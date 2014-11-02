@@ -168,10 +168,6 @@ public class DataStore {
                     loadClesses = true;
                 } else if(mURL.equals(Constants.AssignmentsURL)) {
                     // Broadcast notifications that the data store has finished loading the assignments and grades.
-                    Log.i("","Broadcasting assignments and grades notification");
-                    for(Assignment a : mAssignments) {
-                        Log.d("", a.name);
-                    }
                     broadCastNotification(Constants.AssignmentsNotification);
                     broadCastNotification(Constants.GradesNotification);
                     loadAssignmentsAndGrades = true;
