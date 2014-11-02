@@ -33,7 +33,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
-        } else {
+        }
+        else if (! DataStore.getInstance(getApplicationContext()).loadData()){
+
+            Intent intent = new Intent(this, SplashActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else {
+
             //CredentialManager.clearCredentials(getApplicationContext());
             setContentView(R.layout.activity_main);
             // Initialization.
@@ -70,6 +78,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 public void onPageScrollStateChanged(int arg0) {
                 }
             });
+
             DataStore.getInstance(getApplicationContext()).fetchClasses();
             DataStore.getInstance(getApplicationContext()).fetchAssignmentsAndGrades();
         }
