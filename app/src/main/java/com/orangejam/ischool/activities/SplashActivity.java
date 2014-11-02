@@ -46,7 +46,6 @@ public class SplashActivity extends Activity {
 
         private void startMainActivity() {
             if(dataIsLoaded()){
-                Log.i("", "start main in spalsh");
                 Intent newIntent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(newIntent);
                 finish();
@@ -84,8 +83,6 @@ public class SplashActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
-
-        Log.i("","onCreate in splash");
 
         DataStore.getInstance(getApplicationContext()).fetchClasses();
         DataStore.getInstance(getApplicationContext()).fetchAssignmentsAndGrades();

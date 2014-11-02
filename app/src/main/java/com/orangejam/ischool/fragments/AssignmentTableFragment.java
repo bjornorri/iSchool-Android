@@ -60,9 +60,6 @@ public class AssignmentTableFragment extends ListFragment {
         // Inflate the view
         View rootView = inflater.inflate(R.layout.fragment_assignments, container, false);
 
-        if(mAssignments.size() <= 0){
-            Log.i("","assignemnt 0");
-        }
 
         mContext = getActivity().getApplicationContext();
 
