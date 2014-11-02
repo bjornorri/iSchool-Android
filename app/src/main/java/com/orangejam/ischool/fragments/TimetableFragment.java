@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.orangejam.ischool.R;
 import com.orangejam.ischool.adapters.TimetableAdapter;
@@ -26,6 +27,7 @@ public class TimetableFragment extends ListFragment {
     private SwipeRefreshLayout mSwipeLayout;
     private TimetableAdapter mAdapter;
     private Context mContext;
+    private TextView mEmptyLabel;
 
     private int mDay;
     private ArrayList<Class> mClasses = new ArrayList<Class>();
@@ -39,6 +41,11 @@ public class TimetableFragment extends ListFragment {
                 Log.d("TimetableFragment", "Updating list view");
                 mClasses.clear();
                 mClasses.addAll(DataStore.getInstance(context).getClassesForDay(mDay));
+                if(mClasses.isEmpty()) {
+                    mEmptyLabel.setVisibility(View.VISIBLE);
+                } else {
+                    mEmptyLabel.setVisibility(View.GONE);
+                }
                 mAdapter.notifyDataSetChanged();
             }
         }
@@ -52,10 +59,13 @@ public class TimetableFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_list, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_timetable, container, false);
 
         // Get context.
         mContext = getActivity().getApplicationContext();
+
+        // Get the empty label.
+        mEmptyLabel = (TextView) rootView.findViewById(R.id.emptyLabel);
 
         // Configure SwipeRefreshLayout.
         mSwipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
@@ -69,12 +79,15 @@ public class TimetableFragment extends ListFragment {
         mSwipeLayout.setColorSchemeResources(android.R.color.holo_red_light,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
-                android.R.color.holo_blue_bright);
+                android.R.color.holo_blue_dark);
 
         // If there are classes in the data store, load them.
         ArrayList<Class> classes = DataStore.getInstance(mContext).getClassesForDay(mDay);
         if(classes != null) {
             mClasses = classes;
+            if(mClasses.isEmpty()) {
+                mEmptyLabel.setVisibility(View.VISIBLE);
+            }
         }
         // Set list view adapter.
         mAdapter = new TimetableAdapter(getActivity(), R.layout.class_cell, mClasses);
