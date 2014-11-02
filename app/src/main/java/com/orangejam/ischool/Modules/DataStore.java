@@ -31,6 +31,11 @@ public class DataStore {
     private static ArrayList<Assignment> mAssignments;
     private static ArrayList<Grade> mGrades;
 
+    private boolean loadClesses = false;
+    private boolean loadAssignmentsAndGrades = false;
+
+
+
     public DataStore() {
         mClasses = null;
         mAssignments = null;
@@ -75,6 +80,9 @@ public class DataStore {
 
     public ArrayList<Grade> getGrades() {
         return mGrades;
+    }
+    public boolean loadData() {
+        return loadAssignmentsAndGrades && loadClesses;
     }
 
     /* Convenience methods to get classes by day. */
@@ -157,6 +165,7 @@ public class DataStore {
                 if(mURL.equals(Constants.TimetableURL)) {
                     // Broadcast a notification that the data store has finished loading the classes.
                     broadCastNotification(Constants.TimetableNotification);
+                    loadClesses = true;
                 } else if(mURL.equals(Constants.AssignmentsURL)) {
                     // Broadcast notifications that the data store has finished loading the assignments and grades.
                     Log.i("","Broadcasting assignments and grades notification");
@@ -165,6 +174,7 @@ public class DataStore {
                     }
                     broadCastNotification(Constants.AssignmentsNotification);
                     broadCastNotification(Constants.GradesNotification);
+                    loadAssignmentsAndGrades = true;
                 }
             } else if(statusCode.equals(401)) {
                 broadCastNotification(Constants.InvalidCredentialsNotification);

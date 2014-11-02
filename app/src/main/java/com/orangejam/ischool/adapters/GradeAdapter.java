@@ -2,13 +2,17 @@ package com.orangejam.ischool.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+
 import com.orangejam.ischool.R;
+import com.orangejam.ischool.activities.LoginActivity;
+import com.orangejam.ischool.activities.MainActivity;
 import com.orangejam.ischool.model.*;
 
 import java.util.ArrayList;
@@ -39,6 +43,7 @@ public class GradeAdapter extends ArrayAdapter {
             if(!courseName.equals(g.courseName)){
                 counter ++;
                 courseName = g.courseName;
+                Log.i("","adding to map");
             }
             map.put(counter, g);
             counter ++;
@@ -71,6 +76,7 @@ public class GradeAdapter extends ArrayAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
 
         View row = convertView;
         Grade g = map.get(position);

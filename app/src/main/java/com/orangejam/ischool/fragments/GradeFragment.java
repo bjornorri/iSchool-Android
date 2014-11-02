@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +58,12 @@ public class GradeFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the view
         View rootView = inflater.inflate(R.layout.fragment_grades, container, false);
-
+        Log.i("","size of grades: " + mGrades.size());
+       /* if(mGrades.size() <= 0){
+            Log.i("","the grade is 0");
+            return rootView;
+        }
+*/
         mContext = getActivity().getApplicationContext();
 
         // Get the empty label.
