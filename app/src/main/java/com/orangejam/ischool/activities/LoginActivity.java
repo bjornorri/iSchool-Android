@@ -66,9 +66,33 @@ public class LoginActivity extends ActionBarActivity {
                 Toast.makeText(context, R.string.networkError, Toast.LENGTH_SHORT).show();
             } else if(action.equals(Constants.TimetableNotification)) {
                 Log.d("", "Received timetable notification");
-                Intent newIntent = new Intent(getApplicationContext(), MainActivity.class);
+                classesLoaded = true;
+                if(dataIsLoaded()){
+                    Intent newIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(newIntent);
+                    finish();
+                }
+               /* Intent newIntent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(newIntent);
-                finish();
+                finish();*/
+            }
+            else if(action.equals(Constants.AssignmentsNotification)){
+                Log.d("", "Received assignment notification");
+                assignmentsLoaded = true;
+                if(dataIsLoaded()){
+                    Intent newIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(newIntent);
+                    finish();
+                }
+            }
+            else if(action.equals(Constants.GradesNotification)){
+                Log.d("", "Received grade notification");
+                gradesLoaded = true;
+                if(dataIsLoaded()){
+                    Intent newIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(newIntent);
+                    finish();
+                }
             }
         }
     };
@@ -107,6 +131,8 @@ public class LoginActivity extends ActionBarActivity {
         filter.addAction(Constants.InvalidCredentialsNotification);
         filter.addAction(Constants.NetworkErrorNotification);
         filter.addAction(Constants.TimetableNotification);
+        filter.addAction(Constants.AssignmentsNotification);
+        filter.addAction(Constants.GradesNotification);
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(mBroadcastReceiver, filter);
     }
 
@@ -143,6 +169,8 @@ public class LoginActivity extends ActionBarActivity {
         String username = mUsernameField.getText().toString();
         String password = mPasswordField.getText().toString();
         CredentialManager.storeCredentials(getApplicationContext(), username, password);
+        Log.i("","fetching data");
         DataStore.getInstance(getApplicationContext()).fetchClasses();
+        DataStore.getInstance((getApplicationContext())).fetchAssignmentsAndGrades();
     }
 }
