@@ -76,12 +76,11 @@ public class AssignmentAdapter extends ArrayAdapter {
 
         if(a.handedIn)
         {
-            // Make check image visible
-            holder.checkImage.setVisibility(View.VISIBLE);
+            holder.checkImage.setImageResource(R.drawable.rulogo);
         }
         else
         {
-            holder.checkImage.setVisibility(View.INVISIBLE);
+            holder.checkImage.setImageResource(R.drawable.rulogo);
         }
 
         DateFormat formatter = new SimpleDateFormat("dd.MM");

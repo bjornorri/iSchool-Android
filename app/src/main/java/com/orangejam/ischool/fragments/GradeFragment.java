@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.ListFragment;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.orangejam.ischool.adapters.GradeAdapter;
@@ -21,6 +22,7 @@ import com.orangejam.ischool.R;
 
 import com.orangejam.ischool.modules.Constants;
 import com.orangejam.ischool.modules.DataStore;
+import com.orangejam.ischool.modules.RefreshLayout;
 
 import java.util.ArrayList;
 
@@ -29,7 +31,7 @@ import java.util.ArrayList;
  */
 public class GradeFragment extends ListFragment {
 
-    private SwipeRefreshLayout mSwipeLayout;
+    private RefreshLayout mSwipeLayout;
     private GradeAdapter mAdapter;
     private Context mContext;
     private TextView mEmptyLabel;
@@ -70,7 +72,8 @@ public class GradeFragment extends ListFragment {
         mEmptyLabel = (TextView) rootView.findViewById(R.id.emptyLabel);
 
         // Configure SwipeRefreshLayout.
-        mSwipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
+        mSwipeLayout = (RefreshLayout) rootView.findViewById(R.id.swipe_container);
+        mSwipeLayout.setChildView((ListView)rootView.findViewById(android.R.id.list));
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -81,7 +84,7 @@ public class GradeFragment extends ListFragment {
         mSwipeLayout.setColorSchemeResources(android.R.color.holo_red_light,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
-                android.R.color.holo_blue_bright);
+                android.R.color.holo_blue_dark);
 
         ArrayList<Grade> grades = DataStore.getInstance(mContext).getGrades();
         if(grades != null) {

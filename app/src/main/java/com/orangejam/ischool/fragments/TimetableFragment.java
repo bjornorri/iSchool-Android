@@ -11,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.orangejam.ischool.R;
@@ -18,12 +19,13 @@ import com.orangejam.ischool.adapters.TimetableAdapter;
 import com.orangejam.ischool.modules.Constants;
 import com.orangejam.ischool.modules.DataStore;
 import com.orangejam.ischool.model.Class;
+import com.orangejam.ischool.modules.RefreshLayout;
 
 import java.util.ArrayList;
 
 public class TimetableFragment extends ListFragment {
 
-    private SwipeRefreshLayout mSwipeLayout;
+    private RefreshLayout mSwipeLayout;
     private TimetableAdapter mAdapter;
     private Context mContext;
     private TextView mEmptyLabel;
@@ -65,7 +67,8 @@ public class TimetableFragment extends ListFragment {
         mEmptyLabel = (TextView) rootView.findViewById(R.id.emptyLabel);
 
         // Configure SwipeRefreshLayout.
-        mSwipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
+        mSwipeLayout = (RefreshLayout) rootView.findViewById(R.id.swipe_container);
+        mSwipeLayout.setChildView((ListView) rootView.findViewById(android.R.id.list));
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
