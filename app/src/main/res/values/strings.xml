@@ -21,6 +21,8 @@
     <string name="Tomorrow">Á morgun</string>
     <string name="Rank">Röð</string>
     <string name="NoClasses">Engir tímar í dag.</string>
+    <string name="NoAssignments">Engin verkefni.</string>
+    <string name="NoGrades">Engar einkunnir.</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Icon">Icon</string>
 

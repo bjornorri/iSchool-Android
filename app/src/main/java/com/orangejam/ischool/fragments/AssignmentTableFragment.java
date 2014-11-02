@@ -8,10 +8,12 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.ListFragment;
+import android.widget.TextView;
 
 import com.orangejam.ischool.adapters.AssignmentAdapter;
 import com.orangejam.ischool.R;
@@ -29,6 +31,7 @@ public class AssignmentTableFragment extends ListFragment {
     private SwipeRefreshLayout mSwipeLayout;
     private AssignmentAdapter mAdapter;
     private Context mContext;
+    private TextView mEmptyLabel;
 
     private ArrayList<Assignment> mAssignments = new ArrayList<Assignment>();
 
@@ -39,6 +42,11 @@ public class AssignmentTableFragment extends ListFragment {
             if(intent.getAction().equals(Constants.AssignmentsNotification)) {
                 mAssignments.clear();
                 mAssignments.addAll(DataStore.getInstance(context).getAssignments());
+                if(mAssignments.isEmpty()) {
+                    mEmptyLabel.setVisibility(View.VISIBLE);
+                } else {
+                    mEmptyLabel.setVisibility(View.GONE);
+                }
                 mAdapter.notifyDataSetChanged();
             }
         }
@@ -48,9 +56,12 @@ public class AssignmentTableFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the view
-        View rootView = inflater.inflate(R.layout.fragment_list, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_assignments, container, false);
 
         mContext = getActivity().getApplicationContext();
+
+        // Get the empty label.
+        mEmptyLabel = (TextView) rootView.findViewById(R.id.emptyLabel);
 
         // Configure SwipeRefreshLayout.
         mSwipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
@@ -69,6 +80,11 @@ public class AssignmentTableFragment extends ListFragment {
         ArrayList<Assignment> assignments = DataStore.getInstance(mContext).getAssignments();
         if(assignments != null) {
             mAssignments = assignments;
+            if(mAssignments.isEmpty()) {
+                mEmptyLabel.setVisibility(View.VISIBLE);
+            } else {
+                mEmptyLabel.setVisibility(View.GONE);
+            }
         }
         mAdapter = new AssignmentAdapter(getActivity(), R.layout.assignment_cell, mAssignments);
         setListAdapter(mAdapter);
