@@ -26,7 +26,6 @@ public class Parser {
     public static ArrayList<Class> parseClasses(String html) {
         ArrayList<Class> classes = new ArrayList<Class>();
         if(html == null) {
-            Log.d("Parser", "Html was null!");
             return classes;
         }
         // Create a Jsoup Document object.

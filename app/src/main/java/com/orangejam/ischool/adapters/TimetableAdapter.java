@@ -2,7 +2,6 @@ package com.orangejam.ischool.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +11,10 @@ import android.widget.TextView;
 
 import com.orangejam.ischool.R;
 import com.orangejam.ischool.model.Class;
-import com.orangejam.ischool.modules.Constants;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by bjornorri on 10/10/14.

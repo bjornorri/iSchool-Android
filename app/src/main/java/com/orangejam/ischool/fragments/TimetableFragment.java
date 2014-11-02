@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,10 +34,8 @@ public class TimetableFragment extends ListFragment {
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("TimetableFragment", "Received!!!" + intent.getAction());
             mSwipeLayout.setRefreshing(false);
             if(intent.getAction().equals(Constants.TimetableNotification)) {
-                Log.d("TimetableFragment", "Updating list view");
                 mClasses.clear();
                 mClasses.addAll(DataStore.getInstance(context).getClassesForDay(mDay));
                 if(mClasses.isEmpty()) {
@@ -72,7 +69,6 @@ public class TimetableFragment extends ListFragment {
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.d("TimetableFragment", "Refreshing");
                 DataStore.getInstance(getActivity().getApplicationContext()).fetchClasses();
             }
         });
