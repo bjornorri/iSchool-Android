@@ -49,50 +49,39 @@ public class LoginActivity extends ActionBarActivity {
             return classesLoaded && assignmentsLoaded && gradesLoaded;
         }
 
+        private void startMainActivity() {
+            if(dataIsLoaded()){
+                Intent newIntent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(newIntent);
+                finish();
+            }
+        }
+
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
             if(action.equals(Constants.InvalidCredentialsNotification)) {
-                Log.d("", "Received invalid credentials notification");
                 reset();
                 CredentialManager.clearCredentials(context);
                 mInvalidLabel.setVisibility(View.VISIBLE);
                 mSpinner.setVisibility(View.GONE);
             } else if(action.equals(Constants.NetworkErrorNotification)) {
-                Log.d("", "Received network error notification");
                 reset();
                 CredentialManager.clearCredentials(context);
                 mSpinner.setVisibility(View.GONE);
                 Toast.makeText(context, R.string.networkError, Toast.LENGTH_SHORT).show();
             } else if(action.equals(Constants.TimetableNotification)) {
-                Log.d("", "Received timetable notification");
                 classesLoaded = true;
-                if(dataIsLoaded()){
-                    Intent newIntent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(newIntent);
-                    finish();
-                }
-               /* Intent newIntent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(newIntent);
-                finish();*/
+                startMainActivity();
+
             }
             else if(action.equals(Constants.AssignmentsNotification)){
-                Log.d("", "Received assignment notification");
                 assignmentsLoaded = true;
-                if(dataIsLoaded()){
-                    Intent newIntent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(newIntent);
-                    finish();
-                }
+                startMainActivity();
             }
             else if(action.equals(Constants.GradesNotification)){
-                Log.d("", "Received grade notification");
                 gradesLoaded = true;
-                if(dataIsLoaded()){
-                    Intent newIntent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(newIntent);
-                    finish();
-                }
+                startMainActivity();
             }
         }
     };
@@ -169,7 +158,7 @@ public class LoginActivity extends ActionBarActivity {
         String username = mUsernameField.getText().toString();
         String password = mPasswordField.getText().toString();
         CredentialManager.storeCredentials(getApplicationContext(), username, password);
-        Log.i("","fetching data");
+
         DataStore.getInstance(getApplicationContext()).fetchClasses();
         DataStore.getInstance((getApplicationContext())).fetchAssignmentsAndGrades();
     }

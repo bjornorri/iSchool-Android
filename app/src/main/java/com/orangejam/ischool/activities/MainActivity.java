@@ -36,7 +36,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         } else {
             //CredentialManager.clearCredentials(getApplicationContext());
             setContentView(R.layout.activity_main);
-
             // Initialization.
             mViewPager = (ViewPager) findViewById(R.id.pager);
             mActionBar = getActionBar();
