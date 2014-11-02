@@ -107,20 +107,26 @@ public class GradeAdapter extends ArrayAdapter {
             holder.rankLabel = (TextView)row.findViewById(R.id.gradeRankLabel);
             row.setTag(holder);
 
-            String rank ="";
+            String rank = "";
             String grade = "";
 
 
             if(g.lastRank != null && g.firstRank != null ) {
-                rank = g.firstRank + "-" + g.lastRank;
+                rank = mContext.getResources().getString(R.string.Rank);
+                rank += ": ";
+                if(g.firstRank == g.lastRank) {
+                    rank += g.firstRank.toString();
+                } else {
+                    rank += g.firstRank + " - " + g.lastRank;
+                }
             }
             if(g.grade != null) {
-                grade = g.grade.toString();
+                grade = g.grade.toString().replace(".", ",");
             }
 
             holder.nameLabel.setText(g.assignmentName);
             holder.rankLabel.setText(rank);
-            holder.gradeLabel.setText(grade.replace(".", ","));
+            holder.gradeLabel.setText(grade);
 
       }
         return row;
