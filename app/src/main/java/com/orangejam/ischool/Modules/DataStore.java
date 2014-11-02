@@ -81,7 +81,8 @@ public class DataStore {
     public ArrayList<Grade> getGrades() {
         return mGrades;
     }
-    public boolean loadData() {
+
+    public boolean isDataLoaded() {
         return loadAssignmentsAndGrades && loadClesses;
     }
 

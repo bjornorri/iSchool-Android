@@ -34,7 +34,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             startActivity(intent);
             finish();
         }
-        else if (! DataStore.getInstance(getApplicationContext()).loadData()){
+        else if (! DataStore.getInstance(getApplicationContext()).isDataLoaded()){
 
             Intent intent = new Intent(this, SplashActivity.class);
             startActivity(intent);
