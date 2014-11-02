@@ -38,11 +38,17 @@ public class TimetableFragment extends ListFragment {
             if(intent.getAction().equals(Constants.TimetableNotification)) {
                 Log.d("TimetableFragment", "Updating list view");
                 mClasses.clear();
-                mClasses.addAll(DataStore.getInstance(context).getClasses());
+                mClasses.addAll(DataStore.getInstance(context).getClassesForDay(mDay));
                 mAdapter.notifyDataSetChanged();
             }
         }
     };
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mDay = getArguments().getInt("Day");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,7 +72,7 @@ public class TimetableFragment extends ListFragment {
                 android.R.color.holo_blue_bright);
 
         // If there are classes in the data store, load them.
-        ArrayList<Class> classes = DataStore.getInstance(mContext).getClasses();
+        ArrayList<Class> classes = DataStore.getInstance(mContext).getClassesForDay(mDay);
         if(classes != null) {
             mClasses = classes;
         }
