@@ -74,11 +74,11 @@ public class AssignmentAdapter extends ArrayAdapter {
 
         if(a.handedIn)
         {
-            holder.checkImage.setImageResource(R.drawable.rulogo);
+            holder.checkImage.setImageResource(R.drawable.checked);
         }
         else
         {
-            holder.checkImage.setImageResource(R.drawable.rulogo);
+            holder.checkImage.setImageResource(R.drawable.unchecked);
         }
 
         DateFormat formatter = new SimpleDateFormat("dd.MM");
