@@ -46,7 +46,7 @@ public class TimetableFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_timetable, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_list, container, false);
 
         // Get context.
         mContext = getActivity().getApplicationContext();

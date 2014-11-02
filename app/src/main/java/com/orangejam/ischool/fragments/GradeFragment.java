@@ -6,10 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +15,10 @@ import android.support.v4.app.ListFragment;
 
 import com.orangejam.ischool.adapters.GradeAdapter;
 import com.orangejam.ischool.model.*;
-import com.orangejam.ischool.model.Class;
 import com.orangejam.ischool.R;
 
 import com.orangejam.ischool.modules.Constants;
 import com.orangejam.ischool.modules.DataStore;
-import com.orangejam.ischool.model.Assignment;
 
 import java.util.ArrayList;
 
@@ -53,7 +49,7 @@ public class GradeFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the view
-        View rootView = inflater.inflate(R.layout.fragment_timetable, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_list, container, false);
 
         mContext = getActivity().getApplicationContext();
 
