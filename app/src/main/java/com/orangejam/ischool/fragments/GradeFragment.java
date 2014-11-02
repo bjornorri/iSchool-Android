@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.ListFragment;
+import android.widget.TextView;
 
 import com.orangejam.ischool.adapters.GradeAdapter;
 import com.orangejam.ischool.model.*;
@@ -30,6 +31,7 @@ public class GradeFragment extends ListFragment {
     private SwipeRefreshLayout mSwipeLayout;
     private GradeAdapter mAdapter;
     private Context mContext;
+    private TextView mEmptyLabel;
 
     private ArrayList<Grade> mGrades = new ArrayList<Grade>();
 
@@ -40,6 +42,11 @@ public class GradeFragment extends ListFragment {
             if(intent.getAction().equals(Constants.GradesNotification)) {
                 mGrades.clear();
                 mGrades.addAll(DataStore.getInstance(context).getGrades());
+                if(mGrades.isEmpty()) {
+                    mEmptyLabel.setVisibility(View.VISIBLE);
+                } else {
+                    mEmptyLabel.setVisibility(View.GONE);
+                }
                 mAdapter.notifyDataSetChanged();
             }
         }
@@ -49,9 +56,12 @@ public class GradeFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the view
-        View rootView = inflater.inflate(R.layout.fragment_list, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_grades, container, false);
 
         mContext = getActivity().getApplicationContext();
+
+        // Get the empty label.
+        mEmptyLabel = (TextView) rootView.findViewById(R.id.emptyLabel);
 
         // Configure SwipeRefreshLayout.
         mSwipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
@@ -70,6 +80,11 @@ public class GradeFragment extends ListFragment {
         ArrayList<Grade> grades = DataStore.getInstance(mContext).getGrades();
         if(grades != null) {
             mGrades = grades;
+            if(mGrades.isEmpty()) {
+                mEmptyLabel.setVisibility(View.VISIBLE);
+            } else {
+                mEmptyLabel.setVisibility(View.GONE);
+            }
         }
 
 
