@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 import com.orangejam.ischool.R;
 import com.orangejam.ischool.adapters.TabsPagerAdapter;
@@ -29,13 +30,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if(CredentialManager.getUsername(getApplicationContext()) == null) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
         }
         else if (! DataStore.getInstance(getApplicationContext()).isDataLoaded()){
-
             Intent intent = new Intent(this, SplashActivity.class);
             startActivity(intent);
             finish();
