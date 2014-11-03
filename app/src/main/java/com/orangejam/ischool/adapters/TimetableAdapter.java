@@ -71,19 +71,26 @@ public class TimetableAdapter extends ArrayAdapter {
 
         if (c.type.equals(Class.Lecture)) {
             holder.typeImage.setImageResource(R.drawable.lecture);
+            holder.typeLabel.setText(R.string.Lecture);
         } else if (c.type.equals(Class.Discussion)) {
             holder.typeImage.setImageResource(R.drawable.discussion);
+            holder.typeLabel.setText(R.string.Discussion);
         } else if (c.type.equals(Class.Assistance)) {
             holder.typeImage.setImageResource(R.drawable.assistance);
+            holder.typeLabel.setText(R.string.Assistance);
         } else {
             holder.typeImage.setImageResource(R.drawable.rulogo);
+            if(c.type.equals(Class.Exam)) {
+                holder.typeLabel.setText(R.string.Exam);
+            } else {
+                holder.typeLabel.setText(R.string.Other);
+            }
         }
 
         // Create a date formatter to convert dates to strings.
         DateFormat formatter = new SimpleDateFormat("HH:mm");
 
         holder.courseLabel.setText(c.courseName);
-        holder.typeLabel.setText(c.type);
         holder.locationLabel.setText(c.location);
         holder.startLabel.setText(formatter.format(c.startDate.getTime()));
         holder.endLabel.setText(formatter.format(c.endDate.getTime()));

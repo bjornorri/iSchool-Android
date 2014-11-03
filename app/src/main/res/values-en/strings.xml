@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">iSchool</string>
+    <string name="action_settings">Settings</string>
+    <string name="Lecture">Lecture</string>
+    <string name="Discussion">Discussion</string>
+    <string name="Assistance">Assistance</string>
+    <string name="Exam">Exam</string>
+    <string name="Other">Other</string>
+    <string name="Username">Username</string>
+    <string name="Password">Password</string>
+    <string name="invalidCredentials">Invalid username or password, try again.</string>
+    <string name="Login">Log in</string>
+    <string name="Logout">Log out</string>
+    <string name="networkError">Network error!</string>
+    <string name="Timetable">Timetable</string>
+    <string name="Assignments">Assignments</string>
+    <string name="Grades">Grades</string>
+    <string name="Now">Now</string>
+    <string name="Today">Today</string>
+    <string name="Tomorrow">Tomorrow</string>
+    <string name="Rank">Rank</string>
+    <string name="NoClasses">No classes today.</string>
+    <string name="NoAssignments">No assignments.</string>
+    <string name="NoGrades">No grades.</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Icon">Icon</string>
+    <string name="Language">Íslenska</string>
+
+</resources>

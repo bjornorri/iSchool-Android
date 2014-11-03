@@ -3,6 +3,7 @@ package com.orangejam.ischool.activities;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -16,6 +17,8 @@ import com.orangejam.ischool.R;
 import com.orangejam.ischool.adapters.TabsPagerAdapter;
 import com.orangejam.ischool.modules.CredentialManager;
 import com.orangejam.ischool.modules.DataStore;
+
+import java.util.Locale;
 
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
@@ -99,8 +102,30 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if(id == R.id.action_language) {
+            Locale current = getResources().getConfiguration().locale;
+            Locale locale;
+            if(current.getLanguage().equals("en")) {
+                locale = new Locale("is");
+            } else {
+                locale = new Locale("en");
+            }
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getApplicationContext().getResources().updateConfiguration(config,
+                    getApplicationContext().getResources().getDisplayMetrics());
+            // Restart the activity.
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
             return true;
+        } else if(id == R.id.action_logout) {
+            DataStore.getInstance(getApplicationContext()).clearData();
+            CredentialManager.clearCredentials(getApplicationContext());
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
