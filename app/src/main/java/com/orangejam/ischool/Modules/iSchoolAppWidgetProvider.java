@@ -62,7 +62,7 @@ public class iSchoolAppWidgetProvider extends AppWidgetProvider {
         {
             service = PendingIntent.getService(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
         }
-        alarmManager.setRepeating(AlarmManager.RTC, TIME.getTime().getTime(), 1000 * 1, service);
+        alarmManager.setRepeating(AlarmManager.RTC, TIME.getTime().getTime(), 1000 * 1 * 60, service);
 
         /*
         if(c != null) {

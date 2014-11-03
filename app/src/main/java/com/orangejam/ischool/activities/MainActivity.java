@@ -1,19 +1,26 @@
 package com.orangejam.ischool.activities;
 
 import android.app.ActionBar;
-import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
+import android.view.View;
 
 import com.orangejam.ischool.R;
 import com.orangejam.ischool.adapters.TabsPagerAdapter;
+import com.orangejam.ischool.fragments.AssignmentTableFragment;
+import com.orangejam.ischool.fragments.GradeFragment;
+import com.orangejam.ischool.fragments.TimetableFragment;
 import com.orangejam.ischool.modules.CredentialManager;
 import com.orangejam.ischool.modules.DataStore;
 
@@ -23,6 +30,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     private ViewPager mViewPager;
     private TabsPagerAdapter mAdapter;
     private ActionBar mActionBar;
+
+    private Fragment mTimetableContainer;
+    private Fragment mAssignmentsContainer;
+    private Fragment mGradesContainer;
 
     // Tab titles.
     private String[] mTabs;
@@ -80,11 +91,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 }
             });
 
+            // Get the tab fragment containers.
+            mTimetableContainer = mAdapter.getItem(0);
+            mAssignmentsContainer = mAdapter.getItem(1);
+            mGradesContainer = mAdapter.getItem(2);
+
             DataStore.getInstance(getApplicationContext()).fetchClasses();
             DataStore.getInstance(getApplicationContext()).fetchAssignmentsAndGrades();
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -120,4 +135,28 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     }
 
+
+    private void initializeFragmentContainers() {
+        Log.d("", "Initializing fragments");
+
+        TimetableFragment timetableFragment = new TimetableFragment();
+        AssignmentTableFragment assignmentFragment = new AssignmentTableFragment();
+        GradeFragment gradeFragment = new GradeFragment();
+
+        android.support.v4.app.FragmentTransaction transaction;
+        // Timetable tab.
+        transaction = mTimetableContainer.getChildFragmentManager().beginTransaction();
+        transaction.add(R.id.fragment_container, timetableFragment);
+        transaction.commit();
+
+        // Assignments tab.
+        transaction = mAssignmentsContainer.getChildFragmentManager().beginTransaction();
+        transaction.add(R.id.fragment_container, assignmentFragment);
+        transaction.commit();
+
+        // Grades tab.
+        transaction = mGradesContainer.getChildFragmentManager().beginTransaction();
+        transaction.add(R.id.fragment_container, gradeFragment);
+        transaction.commit();
+    }
 }

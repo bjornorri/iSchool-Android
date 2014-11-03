@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.orangejam.ischool.fragments.*;
 
@@ -21,18 +22,17 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
+        FragmentContainer container = new FragmentContainer();
         switch(i) {
             case 0:
-                int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-                Bundle bundle = new Bundle();
-                bundle.putInt("Day", day);
-                TimetableFragment fragment = new TimetableFragment();
-                fragment.setArguments(bundle);
-                return fragment;
+                container.setTabIndex(0);
+                return container;
             case 1:
-                return new AssignmentTableFragment();
+                container.setTabIndex(1);
+                return container;
             case 2:
-                return new GradeFragment();
+                container.setTabIndex(2);
+                return container;
         }
         return null;
     }
