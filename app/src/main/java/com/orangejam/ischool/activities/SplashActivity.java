@@ -1,10 +1,15 @@
 package com.orangejam.ischool.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
@@ -26,6 +31,8 @@ import com.orangejam.ischool.modules.DataStore;
  * Created by arnorymir on 02/11/14.
  */
 public class SplashActivity extends Activity {
+
+
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
 
         private boolean classesLoaded = false;
@@ -65,7 +72,7 @@ public class SplashActivity extends Activity {
                 reset();
                 CredentialManager.clearCredentials(context);
 
-                Toast.makeText(context, R.string.networkError, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.NetworkError, Toast.LENGTH_SHORT).show();
             } else if(action.equals(Constants.TimetableNotification)) {
                 classesLoaded = true;
                 startMainActivity();
@@ -80,15 +87,19 @@ public class SplashActivity extends Activity {
             }
         }
     };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.splash);
+            setContentView(R.layout.splash);
 
-        DataStore.getInstance(getApplicationContext()).fetchClasses();
-        DataStore.getInstance(getApplicationContext()).fetchAssignmentsAndGrades();
-    }
+            DataStore.getInstance(getApplicationContext()).fetchClasses();
+            DataStore.getInstance(getApplicationContext()).fetchAssignmentsAndGrades();
+        }
+
+
+
     @Override
     protected void onResume() {
         super.onResume();

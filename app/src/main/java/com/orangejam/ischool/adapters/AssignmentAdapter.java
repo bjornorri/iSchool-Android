@@ -2,6 +2,8 @@ package com.orangejam.ischool.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,8 @@ public class AssignmentAdapter extends ArrayAdapter {
     private int mResourceId;
     private Context mActivity;
     private Context mContext;
+
+
 
     public AssignmentAdapter(Context context, int resource, ArrayList<Assignment> data) {
         super(context, resource, data);

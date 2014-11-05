@@ -13,7 +13,8 @@
     <string name="invalidCredentials">Rangt notendanafn eða lykilorð, reyndu aftur.</string>
     <string name="Login">Innskrá</string>
     <string name="Logout">Útskrá</string>
-    <string name="networkError">Netvilla!</string>
+    <string name="NetworkError">Netvilla!</string>
+    <string name="NetworkMessage">Þú ert ekki tengdur internetinu.</string>
     <string name="Timetable">Stundatafla</string>
     <string name="Assignments">Verkefni</string>
     <string name="Grades">Einkunnir</string>
@@ -27,7 +28,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Icon">Icon</string>
     <string name="Language">English</string>
-    <string name="title_activity_web">WebActivity</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="refresh">Reyna aftur</string>
+    <string name="close">Loka</string>
 
 </resources>
