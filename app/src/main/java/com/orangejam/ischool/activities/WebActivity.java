@@ -1,33 +1,17 @@
 package com.orangejam.ischool.activities;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.net.http.SslError;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.HttpAuthHandler;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 
 import com.orangejam.ischool.R;
 import com.orangejam.ischool.fragments.WebFragment;
-import com.orangejam.ischool.modules.CredentialManager;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class WebActivity extends FragmentActivity {
 
