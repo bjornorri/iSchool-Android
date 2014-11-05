@@ -2,7 +2,9 @@ package com.orangejam.ischool.activities;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.v4.app.FragmentActivity;
@@ -33,6 +35,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        String language = getSharedPreferences("is.orangejam.ischool", Context.MODE_PRIVATE).getString("Language", null);
+        if(language != null) {
+            Locale locale = new Locale(language);
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getApplicationContext().getResources().updateConfiguration(config,
+                    getApplicationContext().getResources().getDisplayMetrics());
+        }
 
         if(CredentialManager.getUsername(getApplicationContext()) == null) {
             Intent intent = new Intent(this, LoginActivity.class);
@@ -104,17 +116,22 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         int id = item.getItemId();
         if(id == R.id.action_language) {
             Locale current = getResources().getConfiguration().locale;
-            Locale locale;
+            String language;
             if(current.getLanguage().equals("en")) {
-                locale = new Locale("is");
+                language = "is";
             } else {
-                locale = new Locale("en");
+                language = "en";
             }
+            Locale locale = new Locale(language);
             Locale.setDefault(locale);
             Configuration config = new Configuration();
             config.locale = locale;
             getApplicationContext().getResources().updateConfiguration(config,
                     getApplicationContext().getResources().getDisplayMetrics());
+            SharedPreferences prefs = getSharedPreferences("is.orangejam.ischool", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("Language", language);
+            editor.apply();
             // Restart the activity.
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
@@ -144,5 +161,4 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
     }
-
 }

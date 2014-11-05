@@ -49,6 +49,15 @@ public class NetworkClient {
         // Create the HTTP client.
         DefaultHttpClient httpClient = new DefaultHttpClient(params);
         httpClient.setCredentialsProvider(credentialsProvider);
+
+        // Fetch the page in English if the locale is set to English.
+        String language = context.getSharedPreferences("is.orangejam.ischool", Context.MODE_PRIVATE).getString("Language", null);
+        if(language != null) {
+            if(language.equals("en")) {
+                pageURL += "&lang=EN";
+            }
+        }
+
         // Craft the request.
         HttpGet getRequest = new HttpGet(pageURL);
         try {

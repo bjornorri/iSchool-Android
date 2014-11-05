@@ -5,10 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +16,7 @@ import android.support.v4.app.ListFragment;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.orangejam.ischool.activities.WebActivity;
 import com.orangejam.ischool.adapters.AssignmentAdapter;
 import com.orangejam.ischool.R;
 import com.orangejam.ischool.modules.Constants;
@@ -79,7 +80,7 @@ public class AssignmentTableFragment extends ListFragment {
         mSwipeLayout.setColorSchemeResources(android.R.color.holo_red_light,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
-                android.R.color.holo_blue_bright);
+                android.R.color.holo_blue_dark);
 
         ArrayList<Assignment> assignments = DataStore.getInstance(mContext).getAssignments();
         if(assignments != null) {
@@ -118,6 +119,12 @@ public class AssignmentTableFragment extends ListFragment {
         LocalBroadcastManager.getInstance(mContext).unregisterReceiver(mBroadcastReceiver);
     }
 
-
-
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        Assignment assignment = DataStore.getInstance(mContext).getAssignments().get(position);
+        Intent intent = new Intent(mContext, WebActivity.class);
+        intent.putExtra("URL", assignment.URL);
+        startActivity(intent);
+    }
 }
