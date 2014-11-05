@@ -70,7 +70,7 @@ public class GradeAdapter extends ArrayAdapter {
 
     @Override
     public boolean isEnabled(int position) {
-        return false;
+        return !(map.get(position) == null);
     }
 
 

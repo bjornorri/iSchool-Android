@@ -21,6 +21,7 @@ import android.support.v4.app.ListFragment;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.orangejam.ischool.activities.WebActivity;
 import com.orangejam.ischool.adapters.GradeAdapter;
 import com.orangejam.ischool.model.*;
 import com.orangejam.ischool.R;
@@ -147,6 +148,24 @@ public class GradeFragment extends ListFragment {
         LocalBroadcastManager.getInstance(mContext).unregisterReceiver(mBroadcastReceiver);
     }
 
-
-
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Log.d("", "Position: " + position);
+        super.onListItemClick(l, v, position, id);
+        Log.d("", "onListItemClick");
+        ArrayList<Grade> grades = DataStore.getInstance(mContext).getGrades();
+        int index = position;
+        String currentCourse = "";
+        for(int i = 0; i < index; i++) {
+            if(!grades.get(i).courseName.equals(currentCourse)) {
+                currentCourse = grades.get(i).courseName;
+                index--;
+            }
+        }
+        Log.d("", "Index: " + index);
+        Grade grade = grades.get(index);
+        Intent intent = new Intent(mContext, WebActivity.class);
+        intent.putExtra("URL", grade.URL);
+        startActivity(intent);
+    }
 }
