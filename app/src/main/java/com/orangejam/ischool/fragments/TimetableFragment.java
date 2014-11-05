@@ -1,9 +1,14 @@
 package com.orangejam.ischool.fragments;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -32,6 +37,13 @@ public class TimetableFragment extends ListFragment {
 
     private int mDay;
     private ArrayList<Class> mClasses = new ArrayList<Class>();
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) mContext.getSystemService(mContext.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
 
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -72,7 +84,22 @@ public class TimetableFragment extends ListFragment {
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                DataStore.getInstance(getActivity().getApplicationContext()).fetchClasses();
+                if(!isNetworkAvailable()){
+                    Resources res = getResources();
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle(res.getString(R.string.NetworkError))
+                            .setMessage(res.getString(R.string.NetworkMessage))
+                            .setCancelable(true)
+                            .setNegativeButton((res.getString(R.string.close)), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            }).create().show();
+                } else {
+                    DataStore.getInstance(getActivity().getApplicationContext()).fetchClasses();
+                }
+
             }
         });
         mSwipeLayout.setColorSchemeResources(android.R.color.holo_red_light,

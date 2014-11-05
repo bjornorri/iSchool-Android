@@ -1,10 +1,15 @@
 package com.orangejam.ischool.activities;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -30,11 +35,34 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     // Tab titles.
     private String[] mTabs;
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(CredentialManager.getUsername(getApplicationContext()) == null) {
+        if(!isNetworkAvailable()){
+            Resources res = getResources();
+            new AlertDialog.Builder(this)
+                    .setTitle(res.getString(R.string.NetworkError))
+                    .setMessage(res.getString(R.string.NetworkMessage))
+                    .setCancelable(false)
+                    .setPositiveButton((res.getString(R.string.refresh)), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent newIntent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(newIntent);
+                            finish();
+                        }
+                    }).create().show();
+
+        }
+        else if(CredentialManager.getUsername(getApplicationContext()) == null) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();

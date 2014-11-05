@@ -69,7 +69,7 @@ public class LoginActivity extends ActionBarActivity {
                 reset();
                 CredentialManager.clearCredentials(context);
                 mSpinner.setVisibility(View.GONE);
-                Toast.makeText(context, R.string.networkError, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.NetworkError, Toast.LENGTH_SHORT).show();
             } else if(action.equals(Constants.TimetableNotification)) {
                 classesLoaded = true;
                 startMainActivity();
