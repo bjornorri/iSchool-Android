@@ -85,6 +85,7 @@ public class GradeFragment extends ListFragment {
             @Override
             public void onRefresh() {
                 if(!isNetworkAvailable()){
+                    mSwipeLayout.setRefreshing(false);
                     Resources res = getResources();
                     new AlertDialog.Builder(getActivity())
                             .setTitle(res.getString(R.string.NetworkError))

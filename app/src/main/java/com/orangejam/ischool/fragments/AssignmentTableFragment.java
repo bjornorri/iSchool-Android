@@ -85,6 +85,7 @@ public class AssignmentTableFragment extends ListFragment {
             @Override
             public void onRefresh() {
                 if(!isNetworkAvailable()){
+                    mSwipeLayout.setRefreshing(false);
                     Resources res = getResources();
                     new AlertDialog.Builder(getActivity())
                             .setTitle(res.getString(R.string.NetworkError))
@@ -99,7 +100,7 @@ public class AssignmentTableFragment extends ListFragment {
                 } else {
                     DataStore.getInstance(getActivity().getApplicationContext()).fetchAssignmentsAndGrades();
                 }
-               
+
             }
         });
         mSwipeLayout.setColorSchemeResources(android.R.color.holo_red_light,
