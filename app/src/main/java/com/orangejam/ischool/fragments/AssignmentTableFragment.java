@@ -21,6 +21,7 @@ import android.support.v4.app.ListFragment;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.orangejam.ischool.activities.MainActivity;
 import com.orangejam.ischool.activities.WebActivity;
 import com.orangejam.ischool.adapters.AssignmentAdapter;
 import com.orangejam.ischool.R;
@@ -38,6 +39,7 @@ public class AssignmentTableFragment extends ListFragment {
 
     private RefreshLayout mSwipeLayout;
     private AssignmentAdapter mAdapter;
+    private MainActivity mActivity;
     private Context mContext;
     private TextView mEmptyLabel;
 
@@ -73,8 +75,8 @@ public class AssignmentTableFragment extends ListFragment {
         // Inflate the view
         View rootView = inflater.inflate(R.layout.fragment_assignments, container, false);
 
-
-        mContext = getActivity().getApplicationContext();
+        mActivity = (MainActivity) getActivity();
+        mContext = mActivity.getApplicationContext();
 
         // Get the empty label.
         mEmptyLabel = (TextView) rootView.findViewById(R.id.emptyLabel);
@@ -150,8 +152,6 @@ public class AssignmentTableFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         Assignment assignment = DataStore.getInstance(mContext).getAssignments().get(position);
-        Intent intent = new Intent(mContext, WebActivity.class);
-        intent.putExtra("URL", assignment.URL);
-        startActivity(intent);
+        mActivity.showAssignmentDetails(assignment);
     }
 }

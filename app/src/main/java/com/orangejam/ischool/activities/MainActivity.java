@@ -21,6 +21,8 @@ import android.view.Window;
 
 import com.orangejam.ischool.R;
 import com.orangejam.ischool.adapters.TabsPagerAdapter;
+import com.orangejam.ischool.model.Assignment;
+import com.orangejam.ischool.model.Grade;
 import com.orangejam.ischool.modules.CredentialManager;
 import com.orangejam.ischool.modules.DataStore;
 
@@ -187,5 +189,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
+    }
+
+    public void showAssignmentDetails(Assignment assignment) {
+        Intent intent = new Intent(getApplicationContext(), WebActivity.class);
+        intent.putExtra("URL", assignment.URL);
+        startActivity(intent);
+    }
+
+    public void showGradeDetails(Grade grade) {
+        Intent intent = new Intent(getApplicationContext(), WebActivity.class);
+        intent.putExtra("URL", grade.URL);
+        startActivity(intent);
     }
 }

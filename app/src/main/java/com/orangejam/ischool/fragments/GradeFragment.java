@@ -21,6 +21,7 @@ import android.support.v4.app.ListFragment;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.orangejam.ischool.activities.MainActivity;
 import com.orangejam.ischool.activities.WebActivity;
 import com.orangejam.ischool.adapters.GradeAdapter;
 import com.orangejam.ischool.model.*;
@@ -41,6 +42,7 @@ public class GradeFragment extends ListFragment {
     private GradeAdapter mAdapter;
     private Context mContext;
     private TextView mEmptyLabel;
+    private MainActivity mActivity;
 
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -74,7 +76,8 @@ public class GradeFragment extends ListFragment {
         // Inflate the view
         View rootView = inflater.inflate(R.layout.fragment_grades, container, false);
 
-        mContext = getActivity().getApplicationContext();
+        mActivity = (MainActivity) getActivity();
+        mContext = mActivity.getApplicationContext();
 
         // Get the empty label.
         mEmptyLabel = (TextView) rootView.findViewById(R.id.emptyLabel);
@@ -150,9 +153,7 @@ public class GradeFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Log.d("", "Position: " + position);
         super.onListItemClick(l, v, position, id);
-        Log.d("", "onListItemClick");
         ArrayList<Grade> grades = DataStore.getInstance(mContext).getGrades();
         int index = position;
         String currentCourse = "";
@@ -162,10 +163,7 @@ public class GradeFragment extends ListFragment {
                 index--;
             }
         }
-        Log.d("", "Index: " + index);
         Grade grade = grades.get(index);
-        Intent intent = new Intent(mContext, WebActivity.class);
-        intent.putExtra("URL", grade.URL);
-        startActivity(intent);
+        mActivity.showGradeDetails(grade);
     }
 }
