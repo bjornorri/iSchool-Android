@@ -124,7 +124,6 @@ public class TimetableFragment extends ListFragment {
                         mEmptyLabel.setVisibility(View.GONE);
                     }
                     mAdapter.notifyDataSetChanged();
-
                 }
             }
         });

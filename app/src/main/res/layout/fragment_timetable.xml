@@ -6,12 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp" >
-
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
         <TextView
             android:id="@+id/emptyLabel"
             android:layout_width="wrap_content"
@@ -25,27 +22,41 @@
             android:text="@string/NoClasses"
             android:visibility="gone"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="0.8">
+
+
+
         <ListView
             android:id="@android:id/list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="wrap_content"
+            android:layout_height="473dp">
 
         </ListView>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
             android:orientation="horizontal"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true">
+            android:background="#e4e4e4"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_weight="0.2"> >
 
 
             <Button
                 android:id="@+id/prevButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1."
                 android:background="#e4e4e4"
                 android:text="Previous" />
 
@@ -67,6 +78,7 @@
                 android:background="#e4e4e4"
                 android:text="Next" />
         </LinearLayout>
+
     </RelativeLayout>
 
 
