@@ -13,9 +13,11 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,7 +28,10 @@ import com.orangejam.ischool.modules.DataStore;
 import com.orangejam.ischool.model.Class;
 import com.orangejam.ischool.modules.RefreshLayout;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class TimetableFragment extends ListFragment {
 
@@ -34,6 +39,7 @@ public class TimetableFragment extends ListFragment {
     private TimetableAdapter mAdapter;
     private Context mContext;
     private TextView mEmptyLabel;
+    private TextView mDayLabel;
 
     private int mDay;
     private ArrayList<Class> mClasses = new ArrayList<Class>();
@@ -45,9 +51,31 @@ public class TimetableFragment extends ListFragment {
         return activeNetworkInfo != null;
     }
 
+    private String convertIntToDay(int dayNumber){
+        switch (dayNumber) {
+            case 1:
+                return "Sunday";
+            case 2:
+                return "Monday";
+            case 3:
+                return "Tuesday";
+            case 4:
+                return "Wednesday";
+            case 5:
+                return "Thursday";
+            case 6:
+                return "Friday";
+            case 7:
+                return "Saturday";
+        }
+        return"";
+    }
+
+
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            mDayLabel.setText(convertIntToDay(mDay));
             mSwipeLayout.setRefreshing(false);
             if(intent.getAction().equals(Constants.TimetableNotification)) {
                 mClasses.clear();
@@ -58,6 +86,7 @@ public class TimetableFragment extends ListFragment {
                     mEmptyLabel.setVisibility(View.GONE);
                 }
                 mAdapter.notifyDataSetChanged();
+
             }
         }
     };
@@ -72,11 +101,67 @@ public class TimetableFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_timetable, container, false);
 
+        final Button prevButton = (Button) rootView.findViewById(R.id.prevButton);
+        final Button nextButton = (Button) rootView.findViewById(R.id.nextButton);
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mDay + 1 <= 7) {
+                    prevButton.setEnabled(true);
+                    mDay += 1;
+                    mDayLabel.setText(convertIntToDay(mDay));
+                    // if saturday, disable prevButton
+                   if(mDay  ==  7) {
+                       nextButton.setEnabled(false);
+                   }
+                    mClasses.clear();
+                    mClasses.addAll(DataStore.getInstance(mContext).getClassesForDay(mDay));
+                    if (mClasses.isEmpty()) {
+                        mEmptyLabel.setVisibility(View.VISIBLE);
+                    } else {
+                        mEmptyLabel.setVisibility(View.GONE);
+                    }
+                    mAdapter.notifyDataSetChanged();
+
+                }
+            }
+        });
+
+
+        prevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mDay - 1 >= 1){
+
+                    nextButton.setEnabled(true);
+                    mDay -= 1;
+                    mDayLabel.setText(convertIntToDay(mDay));
+                    // if sunday, disable prevButton
+                    if(mDay == 1) {
+                        prevButton.setEnabled(false);
+                    }
+
+                    mClasses.clear();
+                    mClasses.addAll(DataStore.getInstance(mContext).getClassesForDay(mDay));
+                    if(mClasses.isEmpty()) {
+                        mEmptyLabel.setVisibility(View.VISIBLE);
+                    } else {
+                        mEmptyLabel.setVisibility(View.GONE);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+
         // Get context.
         mContext = getActivity().getApplicationContext();
 
         // Get the empty label.
         mEmptyLabel = (TextView) rootView.findViewById(R.id.emptyLabel);
+        mDayLabel = (TextView) rootView.findViewById(R.id.day);
 
         // Configure SwipeRefreshLayout.
         mSwipeLayout = (RefreshLayout) rootView.findViewById(R.id.swipe_container);
@@ -98,11 +183,13 @@ public class TimetableFragment extends ListFragment {
                                 }
                             }).create().show();
                 } else {
+                    mDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
                     DataStore.getInstance(getActivity().getApplicationContext()).fetchClasses();
                 }
 
             }
         });
+
         mSwipeLayout.setColorSchemeResources(android.R.color.holo_red_light,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
