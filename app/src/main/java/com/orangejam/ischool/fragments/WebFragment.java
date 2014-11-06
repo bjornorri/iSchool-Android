@@ -5,6 +5,7 @@ package com.orangejam.ischool.fragments;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
@@ -53,24 +54,22 @@ public class WebFragment extends Fragment {
         public void onPageFinished(WebView view, String url) {
             Log.d("", "onPageFinished");
             super.onPageFinished(view, url);
-            //String js = "$('.ruHeader a').click(function(e){e.preventDefault()});$('.ruLeft').hide();$('.ruRight').hide();$('.ruFooter').hide();$('#headersearch').hide();$('.level1').hide();$('.resetSize').click();$('.increaseSize').click();$('.increaseSize').click();";
-            //String js = "var bla = document.getElementsByClassName('ruPage'); for(var i = 0; i < bla.length; i++){var e = bla[i]; e.style.display = 'none';};";
-            String js = "$('.ruLeft').hide();";
-            // Execute javascript to hide unnecessary elements on page
-            //mWebView.loadUrl(js);
+            if(url.startsWith("https://myschool.ru.is")) {
+                // Execute javascript to hide unnecessary elements on page
+                String js = "javascript: (function(){$('.ruHeader img').hide();$('.ruHeader tr:not(:last-child)').hide();$('.ruLeft').hide();$('.ruRight').hide();$('.ruFooter').hide();$('#headersearch').hide();$('.level1').hide();$('#ruTabsNewcontainer').hide();$('.resetSize').click();$('.increaseSize').click();$('.increaseSize').click();}());";
+                mWebView.loadUrl(js);
+            }
             mWebView.setVisibility(View.VISIBLE);
             mProgressBar.setVisibility(View.GONE);
         }
 
         @Override
         public void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm) {
-            super.onReceivedHttpAuthRequest(view, handler, host, realm);
             handler.proceed(CredentialManager.getUsername(mContext), CredentialManager.getPassword(mContext));
         }
 
         @Override
         public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-            super.onReceivedSslError(view, handler, error);
             handler.proceed();
         }
     };
@@ -112,12 +111,6 @@ public class WebFragment extends Fragment {
     }
 
     public void loadURL(String URL) {
-        Log.d("", "Loading url: " + URL);
-        String rawAuth = CredentialManager.getUsername(mContext) + ":" + CredentialManager.getPassword(mContext);
-        String auth = new String(Base64.encodeToString(rawAuth.getBytes(), 0));
-        String header = "Basic " + auth;
-        Map<String, String> headers = new HashMap<String, String>();
-        headers.put("Authorization", header);
-        mWebView.loadUrl(URL, headers);
+        mWebView.loadUrl(URL);
     }
 }
