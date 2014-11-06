@@ -28,14 +28,16 @@
             android:paddingLeft="20dp"
             android:paddingRight="0dp"
             android:orientation="horizontal"
-            android:layout_weight="0.8">
+            android:layout_weight="0.8"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
 
 
 
         <ListView
             android:id="@android:id/list"
             android:layout_width="wrap_content"
-            android:layout_height="473dp">
+            android:layout_height="461dp">
 
         </ListView>
         </LinearLayout>
