@@ -51,31 +51,39 @@ public class TimetableFragment extends ListFragment {
         return activeNetworkInfo != null;
     }
 
-    private String convertIntToDay(int dayNumber){
+    private void setDayLabel(int dayNumber){
+        Resources res = getResources();
+
         switch (dayNumber) {
             case 1:
-                return "Sunday";
+                mDayLabel.setText(res.getString(R.string.Sunday));
+                break;
             case 2:
-                return "Monday";
+                mDayLabel.setText(res.getString(R.string.Monday));
+                break;
             case 3:
-                return "Tuesday";
+                mDayLabel.setText(res.getString(R.string.Tuesday));
+                break;
             case 4:
-                return "Wednesday";
+                mDayLabel.setText(res.getString(R.string.Wednesday));
+                break;
             case 5:
-                return "Thursday";
+                mDayLabel.setText(res.getString(R.string.Thursday));
+                break;
             case 6:
-                return "Friday";
+                mDayLabel.setText(res.getString(R.string.Friday));
+                break;
             case 7:
-                return "Saturday";
+                mDayLabel.setText(res.getString(R.string.Saturday));
+                break;
         }
-        return"";
     }
 
 
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            mDayLabel.setText(convertIntToDay(mDay));
+
             mSwipeLayout.setRefreshing(false);
             if(intent.getAction().equals(Constants.TimetableNotification)) {
                 mClasses.clear();
@@ -111,7 +119,7 @@ public class TimetableFragment extends ListFragment {
                 if (mDay + 1 <= 7) {
                     prevButton.setEnabled(true);
                     mDay += 1;
-                    mDayLabel.setText(convertIntToDay(mDay));
+                    setDayLabel(mDay);
                     // if saturday, disable prevButton
                    if(mDay  ==  7) {
                        nextButton.setEnabled(false);
@@ -136,7 +144,8 @@ public class TimetableFragment extends ListFragment {
 
                     nextButton.setEnabled(true);
                     mDay -= 1;
-                    mDayLabel.setText(convertIntToDay(mDay));
+                    setDayLabel(mDay);
+
                     // if sunday, disable prevButton
                     if(mDay == 1) {
                         prevButton.setEnabled(false);
@@ -161,6 +170,7 @@ public class TimetableFragment extends ListFragment {
         // Get the empty label.
         mEmptyLabel = (TextView) rootView.findViewById(R.id.emptyLabel);
         mDayLabel = (TextView) rootView.findViewById(R.id.day);
+        setDayLabel(mDay);
 
         // Configure SwipeRefreshLayout.
         mSwipeLayout = (RefreshLayout) rootView.findViewById(R.id.swipe_container);

@@ -30,5 +30,12 @@
     <string name="Language">English</string>
     <string name="refresh">Reyna aftur</string>
     <string name="close">Loka</string>
+    <string name="Sunday">Sunnudagur</string>
+    <string name="Monday">Mánudagur</string>
+    <string name="Tuesday">Þriðjudagur</string>
+    <string name="Wednesday">Miðvikudagur</string>
+    <string name="Thursday">Fimmtudagur</string>
+    <string name="Friday">Föstudagur</string>
+    <string name="Saturday">Laugardagur</string>
 
 </resources>
