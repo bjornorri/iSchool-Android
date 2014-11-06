@@ -1,10 +1,12 @@
 package com.orangejam.ischool.adapters;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.orangejam.ischool.R;
 import com.orangejam.ischool.fragments.*;
 
 import java.util.Calendar;
@@ -15,12 +17,16 @@ import java.util.Calendar;
  */
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 
-    public TabsPagerAdapter(FragmentManager fm) {
+    private Context mContext;
+
+    public TabsPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
+        mContext = context;
     }
 
     @Override
     public Fragment getItem(int i) {
+        boolean isTablet = mContext.getResources().getBoolean(R.bool.isTablet);
         switch(i) {
             case 0:
                 int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
@@ -30,9 +36,17 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
                 fragment.setArguments(bundle);
                 return fragment;
             case 1:
-                return new AssignmentTableFragment();
+                if(isTablet) {
+                    return new AssignmentMasterDetailFragment();
+                } else {
+                    return new AssignmentTableFragment();
+                }
             case 2:
-                return new GradeFragment();
+                if(isTablet) {
+                    return new GradeMasterDetailFragment();
+                } else {
+                    return new GradeFragment();
+                }
         }
         return null;
     }

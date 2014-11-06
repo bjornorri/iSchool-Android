@@ -12,6 +12,7 @@ import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ import android.view.Window;
 
 import com.orangejam.ischool.R;
 import com.orangejam.ischool.adapters.TabsPagerAdapter;
+import com.orangejam.ischool.fragments.WebFragment;
 import com.orangejam.ischool.model.Assignment;
 import com.orangejam.ischool.model.Grade;
 import com.orangejam.ischool.modules.CredentialManager;
@@ -92,7 +94,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             // Initialization.
             mViewPager = (ViewPager) findViewById(R.id.pager);
             mActionBar = getActionBar();
-            mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+            mAdapter = new TabsPagerAdapter(getSupportFragmentManager(), getApplicationContext());
 
             mViewPager.setAdapter(mAdapter);
             // Is this needed? mActionBar.setHomeButtonEnabled(false);
@@ -192,14 +194,30 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     }
 
     public void showAssignmentDetails(Assignment assignment) {
-        Intent intent = new Intent(getApplicationContext(), WebActivity.class);
-        intent.putExtra("URL", assignment.URL);
-        startActivity(intent);
+        boolean isTablet = getResources().getBoolean(R.bool.isTablet);
+        if(isTablet) {
+            FragmentManager manager = getSupportFragmentManager();
+            WebFragment webFragment = (WebFragment) manager.findFragmentById(R.id.detailAssignmentFragment);
+            String baseURL = "https://myschool.ru.is/myschool/";
+            webFragment.loadURL(baseURL + assignment.URL);
+        } else {
+            Intent intent = new Intent(getApplicationContext(), WebActivity.class);
+            intent.putExtra("URL", assignment.URL);
+            startActivity(intent);
+        }
     }
 
     public void showGradeDetails(Grade grade) {
-        Intent intent = new Intent(getApplicationContext(), WebActivity.class);
-        intent.putExtra("URL", grade.URL);
-        startActivity(intent);
+        boolean isTablet = getResources().getBoolean(R.bool.isTablet);
+        if(isTablet) {
+            FragmentManager manager = getSupportFragmentManager();
+            WebFragment webFragment = (WebFragment) manager.findFragmentById(R.id.detailGradeFragment);
+            String baseURL = "https://myschool.ru.is/myschool/";
+            webFragment.loadURL(baseURL + grade.URL);
+        } else {
+            Intent intent = new Intent(getApplicationContext(), WebActivity.class);
+            intent.putExtra("URL", grade.URL);
+            startActivity(intent);
+        }
     }
 }

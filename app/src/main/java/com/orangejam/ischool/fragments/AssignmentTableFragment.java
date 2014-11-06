@@ -7,13 +7,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.orangejam.ischool.activities.MainActivity;
-import com.orangejam.ischool.activities.WebActivity;
 import com.orangejam.ischool.adapters.AssignmentAdapter;
 import com.orangejam.ischool.R;
 import com.orangejam.ischool.modules.Constants;
@@ -73,10 +73,7 @@ public class AssignmentTableFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the view
-        View rootView = inflater.inflate(R.layout.fragment_assignments, container, false);
-
-        mActivity = (MainActivity) getActivity();
-        mContext = mActivity.getApplicationContext();
+        View rootView = inflater.inflate(R.layout.fragment_assignments_list, container, false);
 
         // Get the empty label.
         mEmptyLabel = (TextView) rootView.findViewById(R.id.emptyLabel);
@@ -128,9 +125,15 @@ public class AssignmentTableFragment extends ListFragment {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mActivity = (MainActivity) getActivity();
+        mContext = mActivity.getApplicationContext();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-
         // Register broadcast receiver.
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constants.AssignmentsNotification);

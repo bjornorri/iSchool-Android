@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.orangejam.ischool.fragments.AssignmentMasterDetailFragment">
+
+    <fragment
+        android:id="@+id/masterAssignmentFragment"
+        android:name="com.orangejam.ischool.fragments.AssignmentTableFragment"
+        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        tools:layout="@layout/fragment_assignments_list"
+        class="com.orangejam.ischool.fragments.AssignmentTableFragment"
+        android:tag="masterAssignmentTag" />
+    <fragment
+        android:id="@+id/detailAssignmentFragment"
+        android:name="com.orangejam.ischool.fragments.WebFragment"
+        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        tools:layout="@layout/fragment_web"
+        android:tag="detailAssignmentTag"/>
+
+</LinearLayout>

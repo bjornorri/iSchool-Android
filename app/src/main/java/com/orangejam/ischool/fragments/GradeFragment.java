@@ -13,7 +13,6 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.orangejam.ischool.activities.MainActivity;
-import com.orangejam.ischool.activities.WebActivity;
 import com.orangejam.ischool.adapters.GradeAdapter;
 import com.orangejam.ischool.model.*;
 import com.orangejam.ischool.R;
@@ -74,7 +72,7 @@ public class GradeFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the view
-        View rootView = inflater.inflate(R.layout.fragment_grades, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_grades_list, container, false);
 
         mActivity = (MainActivity) getActivity();
         mContext = mActivity.getApplicationContext();
