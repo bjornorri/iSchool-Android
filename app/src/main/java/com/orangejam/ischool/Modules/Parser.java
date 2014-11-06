@@ -96,7 +96,10 @@ public class Parser {
                             // Remove junk byte from end of each line.
                             for(int j = 0; j < info.length; j++) {
                                 String str = info[j];
-                                info[j] = str.substring(0, str.length() - 1);
+                                char last = str.charAt(str.length() - 1);
+                                if(!Character.isLetter(last) && !Character.isDigit(last)) {
+                                    info[j] = str.substring(0, str.length() - 1);
+                                }
                             }
                             // Get the course name.
                             String courseName = "";
@@ -131,7 +134,12 @@ public class Parser {
                                 if(smalls.size() > 0) {
                                     Element small = smalls.last();
                                     String smallText = small.text();
-                                    String[] parts = smallText.split(", ");
+                                    String[] parts;
+                                    if(smallText.contains("stofa")) {
+                                        parts = smallText.split(" ");
+                                    } else {
+                                        parts = smallText.split(", ");
+                                    }
                                     location = parts[parts.length - 1];
                                 }
 
