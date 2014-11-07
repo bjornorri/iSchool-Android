@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,6 +112,10 @@ public class TimetableFragment extends ListFragment {
 
         final Button prevButton = (Button) rootView.findViewById(R.id.prevButton);
         final Button nextButton = (Button) rootView.findViewById(R.id.nextButton);
+
+        // set '<'  and '>' as text for buttons
+        prevButton.setText(Html.fromHtml("&#x3c"));
+        nextButton.setText(Html.fromHtml("&#x3e"));
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
