@@ -42,25 +42,6 @@ public class iSchoolAppWidgetProvider extends AppWidgetProvider {
             service = PendingIntent.getService(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
         }
         alarmManager.setRepeating(AlarmManager.RTC, TIME.getTime().getTime(), 1000 * 60, service);
-
-        /*
-        if(c != null) {
-            // Find the time at which the widget should be updated next.
-            Calendar time;
-            if(c.isNow()) {
-                time = c.endDate;
-            } else {
-                time = c.startDate;
-            }
-            final Intent intent = new Intent(context, UpdateWidgetService.class);
-            if (service == null)
-            {
-                service = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-            }
-            alarmManager.set(AlarmManager.RTC, time.getTime().getTime(), service);
-        } else {
-            // TODO: Handle this.
-        }*/
     }
 
     @Override

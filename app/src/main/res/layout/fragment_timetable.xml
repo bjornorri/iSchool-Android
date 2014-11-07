@@ -43,14 +43,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#e4e4e4"
+        android:background="#FFFFFF"
         android:gravity="center">
 
         <Button
             android:id="@+id/prevButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="#e4e4e4"
+            android:background="#FFFFFF"
             android:textColor="#CC0000"
             android:textSize="40sp"
             android:layout_centerVertical="true"
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textSize="20sp"
-            android:background="#e4e4e4"
+            android:background="#FFFFFF"
             android:gravity="center_vertical|center_horizontal"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
@@ -72,7 +72,7 @@
             android:id="@+id/nextButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="#e4e4e4"
+            android:background="#FFFFFF"
             android:textSize="40sp"
             android:textColor="#CC0000"
             android:layout_centerVertical="true"
