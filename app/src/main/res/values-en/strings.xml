@@ -31,6 +31,13 @@
     <string name="Language">Íslenska</string>
     <string name="refresh">Refresh</string>
     <string name="close">Close</string>
+    <string name="Sunday">Sunday</string>
+    <string name="Monday">Monday</string>
+    <string name="Tuesday">Tuesday</string>
+    <string name="Wednesday">Wednesday</string>
+    <string name="Thursday">Thursday</string>
+    <string name="Friday">Friday</string>
+    <string name="Saturday">Saturday</string>
 
 
 
