@@ -123,11 +123,13 @@ public class TimetableFragment extends ListFragment {
 
                 if (mDay + 1 <= 7) {
                     prevButton.setEnabled(true);
+                    prevButton.setVisibility(View.VISIBLE);
                     mDay += 1;
                     setDayLabel(mDay);
                     // if saturday, disable prevButton
                    if(mDay  ==  7) {
                        nextButton.setEnabled(false);
+                       nextButton.setVisibility(View.INVISIBLE);
                    }
                     mClasses.clear();
                     mClasses.addAll(DataStore.getInstance(mContext).getClassesForDay(mDay));
@@ -148,12 +150,14 @@ public class TimetableFragment extends ListFragment {
                 if(mDay - 1 >= 1){
 
                     nextButton.setEnabled(true);
+                    nextButton.setVisibility(View.VISIBLE);
                     mDay -= 1;
                     setDayLabel(mDay);
 
                     // if sunday, disable prevButton
                     if(mDay == 1) {
                         prevButton.setEnabled(false);
+                        prevButton.setVisibility(View.INVISIBLE);
                     }
 
                     mClasses.clear();
