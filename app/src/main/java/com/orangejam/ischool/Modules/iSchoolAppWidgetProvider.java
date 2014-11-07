@@ -22,14 +22,13 @@ import java.util.Calendar;
  */
 public class iSchoolAppWidgetProvider extends AppWidgetProvider {
 
-    private PendingIntent service = null;
+    private static PendingIntent service = null;
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Log.i("iSchoolAppWidgetProvider", "Updating widget");
         super.onUpdate(context, appWidgetManager, appWidgetIds);
         final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Class c = getClassForWidget(context);
 
         // Let's try a simple approach first, then implement the cleaver updates.
         final Calendar TIME = Calendar.getInstance();
@@ -38,31 +37,11 @@ public class iSchoolAppWidgetProvider extends AppWidgetProvider {
         TIME.set(Calendar.MILLISECOND, 0);
 
         final Intent i = new Intent(context, UpdateWidgetService.class);
-
-        // Create a date formatter to convert dates to strings.
-        DateFormat formatter = new SimpleDateFormat("HH:mm");
-
-        i.putExtra("CourseName", c.courseName); // Beware, c can be null.
-        i.putExtra("Type", c.type);
-        i.putExtra("Location", c.location);
-        i.putExtra("StartTime", formatter.format(c.startDate.getTime()));
-        i.putExtra("EndTime", formatter.format(c.endDate.getTime()));
-        String when;
-        Resources res = context.getResources();
-        if(c.isNow()) {
-            when = res.getString(R.string.Now);
-        } else if(c.isToday()) {
-            when = res.getString(R.string.Today);
-        } else {
-            when = res.getString(R.string.Tomorrow);
-        }
-        i.putExtra("When", when);
-
         if (service == null)
         {
             service = PendingIntent.getService(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
         }
-        alarmManager.setRepeating(AlarmManager.RTC, TIME.getTime().getTime(), 1000 * 1 * 60, service);
+        alarmManager.setRepeating(AlarmManager.RTC, TIME.getTime().getTime(), 1000 * 60, service);
 
         /*
         if(c != null) {
@@ -90,30 +69,7 @@ public class iSchoolAppWidgetProvider extends AppWidgetProvider {
         if(service != null) {
             final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             alarmManager.cancel(service);
+            service = null;
         }
-    }
-
-    private Class getClassForWidget(Context context) {
-        Class c = null;
-        ArrayList<Class> classes = DataStore.getInstance(context.getApplicationContext()).getClassesForToday();
-        // Try to find a class today that is not over.
-        for(Class aClass : classes) {
-            if(!aClass.isOver()) {
-                c = aClass;
-                break;
-            }
-        }
-        // If there were no such classes, check if there is a class tomorrow.
-        if(c == null) {
-            int tomorrow = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) % 7 + 1;
-            classes = DataStore.getInstance(context.getApplicationContext()).getClassesForDay(tomorrow);
-            for(Class aClass : classes) {
-                if(!aClass.isOver()) {
-                    c = aClass;
-                    break;
-                }
-            }
-        }
-        return c;
     }
 }
