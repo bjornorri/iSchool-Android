@@ -21,6 +21,7 @@
     <string name="Now">Núna</string>
     <string name="Today">Í dag</string>
     <string name="Tomorrow">Á morgun</string>
+    <string name="NoUpcomingClasses">Engir tímar á næstunni</string>
     <string name="Rank">Röð</string>
     <string name="NoClasses">Engir tímar í dag.</string>
     <string name="NoAssignments">Engin verkefni.</string>

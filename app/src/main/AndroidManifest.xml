@@ -33,20 +33,6 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
         </activity>
-
-        <receiver
-            android:name=".modules.iSchoolAppWidgetProvider"
-            android:label="Next Class" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.something.MyWidget.ACTION_WIDGET_RECEIVER" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/appwidget_info" />
-        </receiver>
-        <!-- <service android:enabled="true" android:name=".modules.UpdateWidgetService" /> -->
         <activity
             android:name=".activities.WebActivity"
             android:label="@string/app_name"
@@ -55,6 +41,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
         </activity>
+        <receiver
+            android:name=".modules.iSchoolAppWidgetProvider"
+            android:label="Next Class" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <!--<action android:name="com.something.MyWidget.ACTION_WIDGET_RECEIVER" />-->
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_info" />
+        </receiver>
+        <service android:enabled="true" android:name=".modules.UpdateWidgetService" />
     </application>
 
 </manifest>

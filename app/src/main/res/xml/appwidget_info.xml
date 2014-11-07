@@ -1,7 +1,7 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:minWidth="294dp"
     android:minHeight="146dp"
-    android:previewImage="@drawable/rulogo"
+    android:previewImage="@drawable/ru_transparent"
     android:initialLayout="@layout/app_widget"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen|keyguard"

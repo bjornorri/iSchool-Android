@@ -21,6 +21,7 @@
     <string name="Now">Now</string>
     <string name="Today">Today</string>
     <string name="Tomorrow">Tomorrow</string>
+    <string name="NoUpcomingClasses">No upcoming classes</string>
     <string name="Rank">Rank</string>
     <string name="NoClasses">No classes today.</string>
     <string name="NoAssignments">No assignments.</string>
