@@ -95,6 +95,7 @@ public class TimetableFragment extends ListFragment {
                     mEmptyLabel.setVisibility(View.GONE);
                 }
                 mAdapter.notifyDataSetChanged();
+                setDayLabel(mDay);
 
             }
         }
@@ -202,6 +203,7 @@ public class TimetableFragment extends ListFragment {
                             }).create().show();
                 } else {
                     mDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+
                     DataStore.getInstance(getActivity().getApplicationContext()).fetchClasses();
                 }
 
