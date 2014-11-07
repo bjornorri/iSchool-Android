@@ -22,5 +22,5 @@ Widgets need to be updated and the minimum update time interval is 15 or 30 minu
 
 Notes
 =====
-*You might want to review the app sooner than later because soon there will be no classes and no assignments to view.
-*The widget only shows classes that are either today or tomorrow. If the widget is empty, it is because there are no classes at least until the day after tomorrow (for example on a Saturday).
+* You might want to review the app sooner than later because soon there will be no classes and no assignments to view.
+* The widget only shows classes that are either today or tomorrow. If the widget is empty, it is because there are no classes at least until the day after tomorrow (for example on a Saturday).
