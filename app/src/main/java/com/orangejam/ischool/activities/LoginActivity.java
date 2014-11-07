@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
@@ -24,6 +26,8 @@ import com.orangejam.ischool.R;
 import com.orangejam.ischool.modules.Constants;
 import com.orangejam.ischool.modules.CredentialManager;
 import com.orangejam.ischool.modules.DataStore;
+
+import java.util.Locale;
 
 public class LoginActivity extends ActionBarActivity {
 
@@ -146,7 +150,28 @@ public class LoginActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_language) {
+            Locale current = getResources().getConfiguration().locale;
+            String language;
+            if(current.getLanguage().equals("en")) {
+                language = "is";
+            } else {
+                language = "en";
+            }
+            Locale locale = new Locale(language);
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getApplicationContext().getResources().updateConfiguration(config,
+                    getApplicationContext().getResources().getDisplayMetrics());
+            SharedPreferences prefs = getSharedPreferences("is.orangejam.ischool", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("Language", language);
+            editor.apply();
+            // Restart the activity.
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
