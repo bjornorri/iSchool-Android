@@ -53,6 +53,11 @@ public class TimetableFragment extends ListFragment {
         return activeNetworkInfo != null;
     }
 
+    private void setEnabled(Button button){
+        button.setEnabled(true);
+        button.setVisibility(View.VISIBLE);
+    }
+
     private void setDayLabel(int dayNumber){
         Resources res = getResources();
 
@@ -61,48 +66,36 @@ public class TimetableFragment extends ListFragment {
                 mDayLabel.setText(res.getString(R.string.Sunday));
                 mPrevButton.setEnabled(false);
                 mPrevButton.setVisibility(View.INVISIBLE);
-                mNextButton.setEnabled(true);
-                mNextButton.setVisibility(View.VISIBLE);
+                setEnabled(mNextButton);
                 break;
             case 2:
                 mDayLabel.setText(res.getString(R.string.Monday));
-                mPrevButton.setEnabled(true);
-                mPrevButton.setVisibility(View.VISIBLE);
-                mNextButton.setEnabled(true);
-                mNextButton.setVisibility(View.VISIBLE);
+                setEnabled(mNextButton);
+                setEnabled(mPrevButton);
                 break;
             case 3:
                 mDayLabel.setText(res.getString(R.string.Tuesday));
-                mPrevButton.setEnabled(true);
-                mPrevButton.setVisibility(View.VISIBLE);
-                mNextButton.setEnabled(true);
-                mNextButton.setVisibility(View.VISIBLE);
+                setEnabled(mNextButton);
+                setEnabled(mPrevButton);
                 break;
             case 4:
                 mDayLabel.setText(res.getString(R.string.Wednesday));
-                mPrevButton.setEnabled(true);
-                mPrevButton.setVisibility(View.VISIBLE);
-                mNextButton.setEnabled(true);
-                mNextButton.setVisibility(View.VISIBLE);
+                setEnabled(mNextButton);
+                setEnabled(mPrevButton);
                 break;
             case 5:
                 mDayLabel.setText(res.getString(R.string.Thursday));
-                mPrevButton.setEnabled(true);
-                mPrevButton.setVisibility(View.VISIBLE);
-                mNextButton.setEnabled(true);
-                mNextButton.setVisibility(View.VISIBLE);
+                setEnabled(mNextButton);
+                setEnabled(mPrevButton);
                 break;
             case 6:
                 mDayLabel.setText(res.getString(R.string.Friday));
-                mPrevButton.setEnabled(true);
-                mPrevButton.setVisibility(View.VISIBLE);
-                mNextButton.setEnabled(true);
-                mNextButton.setVisibility(View.VISIBLE);
+                setEnabled(mNextButton);
+                setEnabled(mPrevButton);
                 break;
             case 7:
                 mDayLabel.setText(res.getString(R.string.Saturday));
-                mPrevButton.setEnabled(true);
-                mPrevButton.setVisibility(View.VISIBLE);
+                setEnabled(mPrevButton);
                 mNextButton.setEnabled(false);
                 mNextButton.setVisibility(View.INVISIBLE);
                 break;
@@ -115,6 +108,7 @@ public class TimetableFragment extends ListFragment {
 
             mSwipeLayout.setRefreshing(false);
             if(intent.getAction().equals(Constants.TimetableNotification)) {
+
                 mClasses.clear();
                 mClasses.addAll(DataStore.getInstance(context).getClassesForDay(mDay));
                 if(mClasses.isEmpty()) {
@@ -128,6 +122,7 @@ public class TimetableFragment extends ListFragment {
             }
         }
     };
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -153,6 +148,7 @@ public class TimetableFragment extends ListFragment {
             public void onClick(View v) {
                 mDay += 1;
                 setDayLabel(mDay);
+
                 mClasses.clear();
                 mClasses.addAll(DataStore.getInstance(mContext).getClassesForDay(mDay));
                 if (mClasses.isEmpty()) {
